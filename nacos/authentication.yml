@@ -1,0 +1,54 @@
+dactiv:
+  service:
+    authentication:
+      form-login-failure-captcha-type: tianai
+
+spring:
+  elasticsearch:
+    uris: http://localhost:9200
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password:
+  datasource:
+    url: jdbc:mysql://localhost:3306/dactiv_authentication?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username:
+    password:
+    type: com.zaxxer.hikari.HikariDataSource
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username:
+    password:
+    virtual-host: /
+    # 开启发送失败返回
+    publisher-returns: true
+    # 开启发送确认
+    publisher-confirm-type: correlated
+    listener:
+      # 开启 ack
+      simple:
+        acknowledge-mode: manual
+        concurrency: 8
+        retry:
+          # 重试初始间隔时间
+          initial-interval: 2000
+          # 间隔时间乘子，间隔时间 * 乘子 = 下一次的间隔时间，最大不能超过设置的最大间隔时间
+          multiplier: 2
+          # 启用重试
+          enabled: true
+      # 开启 ack
+      direct:
+        acknowledge-mode: manual
+        retry:
+          # 重试初始间隔时间
+          initial-interval: 2000
+          # 间隔时间乘子，间隔时间 * 乘子 = 下一次的间隔时间，最大不能超过设置的最大间隔时间
+          multiplier: 2
+          # 启用重试
+          enabled: true
+    # 支持消息的确认与返回
+    template:
+      mandatory: true

@@ -23,6 +23,15 @@ dactiv:
       mvc:
         filter-view-base-packages: com.github.dactiv.service.authentication.domain
     security:
+      oauth2:
+        ignore-principal-properties-map:
+          oauth2authorize:
+            - "principal"
+            - "authorizationUri"
+            - "details"
+          userinfo:
+            - "principal"
+        consent-page-uri: /authentication/oauth2/consent
       captcha-verification:
         verify-urls: "/login/**"
       plugin:

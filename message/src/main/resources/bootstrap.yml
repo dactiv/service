@@ -13,7 +13,7 @@ spring:
         server-addr: ${NACOS_HOST:localhost:8848}
         username: ${NACOS_USERNAME:nacos}
         password: ${NACOS_PASSWORD:19880602}
-        group: dactiv_service
+        group: DACTIV_SERVICE
         metadata:
           version: ${info.version}
           name: ${info.name}
@@ -24,8 +24,8 @@ spring:
         username: ${spring.cloud.nacos.discovery.username}
         password: ${spring.cloud.nacos.discovery.password}
         file-extension: yml
-        group: dactiv_service
+        group: DACTIV_SERVICE
         shared-configs:
           - data-id: application.${spring.cloud.nacos.config.file-extension}
             refresh: true
-            group: dactiv_service
+            group: DACTIV_SERVICE

@@ -1,0 +1,61 @@
+server:
+  servlet:
+    encoding:
+      force: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+spring:
+  aop:
+    proxy-target-class: true
+  jackson:
+    default-property-inclusion: non_empty
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+    serialization:
+      write_dates_as_timestamps: true
+      write_bigdecimal_as_plain: true
+    deserialization:
+      fail-on-unknown-properties: false
+
+dactiv:
+  spring:
+    security:
+      users:
+        - name: feign
+          password: "dactiv#INNER@feign.160826"
+          roles: "BASIC"
+      audit:
+        type: elasticsearch
+      authentication-cache:
+        name: "dactiv:service:spring:security:authentication:"
+        expires-time:
+          value: 7
+          unit: DAYS
+      authorization-cache:
+        name: "dactiv:service:spring:security:authorization:"
+        expires-time:
+          value: 7
+          unit: DAYS
+      remember-me:
+        cache:
+          name: "dactiv:service:spring:security:remember-me:"
+          expires-time:
+            value: 7
+            unit: DAYS
+      access-token:
+        crypto-key: jmUFt7sqMPXf+c8w69OpIg==
+        refresh-token-Cache:
+          name: "dactiv:service:spring:security:context:refresh-token:"
+          expires-time:
+            value: 7
+            unit: DAYS
+        access-token-cache:
+          name: "dactiv:service:spring:security:context:access-token:"
+          expires-time:
+            value: 7
+            unit: DAYS
