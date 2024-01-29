@@ -7,6 +7,7 @@ import com.github.dactiv.framework.idempotent.annotation.Idempotent;
 import com.github.dactiv.framework.security.enumerate.ResourceType;
 import com.github.dactiv.framework.security.plugin.Plugin;
 import com.github.dactiv.framework.spring.web.query.Property;
+import com.github.dactiv.service.commons.service.SystemConstants;
 import com.github.dactiv.service.commons.service.domain.meta.IdValueMeta;
 import com.github.dactiv.service.commons.service.enumerate.ResourceSourceEnum;
 import com.github.dactiv.service.resource.config.ApplicationConfig;
@@ -22,6 +23,8 @@ import org.apache.commons.text.lookup.StringLookupFactory;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.Assert;
@@ -200,8 +203,8 @@ public class SystemController {
             if (Objects.nonNull(instance)) {
                 String url = instance.getUri() + AntPathMatcher.DEFAULT_PATH_SEPARATOR + DEFAULT_EVN_URI;
                 try {
-                    //noinspection unchecked
-                    Map<String, Object> data = restTemplate.getForObject(url, Map.class);
+                    ResponseEntity<Map<String, Object>> res = restTemplate.exchange(url, HttpMethod.GET, null, SystemConstants.MAP_REFERENCE);
+                    Map<String, Object> data = res.getBody();
                     result.put(s, data);
                 } catch (Exception e) {
                     log.warn("获取 [" + s + "] 服务环境变量出错", e);

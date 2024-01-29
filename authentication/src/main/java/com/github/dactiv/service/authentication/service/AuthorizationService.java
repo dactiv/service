@@ -415,7 +415,7 @@ public class AuthorizationService {
                 .forEach(userResource::add);
 
         // 构造用户的独立资源
-        userResource.addAll(getResourcesStream(user.getResourceMap(), groupSources).distinct().toList();
+        userResource.addAll(getResourcesStream(user.getResourceMap(), groupSources).distinct().toList());
 
         return userResource;
     }
