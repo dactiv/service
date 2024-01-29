@@ -1,0 +1,68 @@
+mybatis-plus:
+  type-aliases-package: com.github.dactiv.service.authentication.domain.entity
+  configuration:
+    call-setters-on-nulls: on
+    default-enum-type-handler: com.github.dactiv.framework.mybatis.handler.NameValueEnumTypeHandler
+  global-config:
+    db-config:
+      id-type: auto
+    banner: "off"
+
+info:
+  version: @version@
+  name: @name@
+  artifact-id: ${spring.application.name}
+  group-id: @groupId@
+
+dactiv:
+  captcha:
+    controller:
+      enabled: false
+  spring:
+    web:
+      mvc:
+        filter-view-base-packages: com.github.dactiv.service.authentication.domain
+    security:
+      captcha-verification:
+        verify-urls: "/login/**"
+      plugin:
+        base-packages: com.github.dactiv.service.authentication.controller
+        generate-sources:
+          - "CONSOLE"
+          - "SYSTEM"
+        parent:
+          authority:
+            name: "权限管理"
+            icon: "icon-user-list"
+            type: Root
+            sources:
+              - "CONSOLE"
+          sso:
+            name: "单点认证管理"
+            icon: "icon-sso"
+            type: Root
+            sources:
+              - "CONSOLE"
+          log:
+            name: "日志管理"
+            icon: "icon-log-management"
+            type: Security
+            sources:
+              - "CONSOLE"
+      permit-uri-ant-matchers:
+        - "/prepare/**"
+        - "/login/**"
+        - "/logout/**"
+        - "/actuator/**"
+        - "/healthcare/alliance/user/sendSmsCaptchaByIdentity/**"
+        - "/healthcare/alliance/user/restPassword/**"
+        - "/asean/user/sendEmailCaptchaByIdentity/**"
+        - "/asean/user/restPassword/**"
+        - "/healthcare/alliance/user/register/**"
+        - "/sso/group/getByCode/**"
+        - "/sso/app/getEmployee/**"
+  idempotent:
+    ignore-classes: org.springframework.security.core.context.SecurityContext
+  enumerate:
+    base-packages:
+      - com.github.dactiv.service.authentication.enumerate

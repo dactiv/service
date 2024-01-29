@@ -1,0 +1,79 @@
+mybatis-plus:
+  type-aliases-package: com.github.dactiv.service.resource.domain.entity
+  configuration:
+    call-setters-on-nulls: on
+    default-enum-type-handler: com.github.dactiv.framework.mybatis.handler.NameValueEnumTypeHandler
+  global-config:
+    db-config:
+      id-type: auto
+    banner: "off"
+
+info:
+  version: @version@
+  name: @name@
+  artifact-id: ${spring.application.name}
+  group-id: @groupId@
+
+dactiv:
+  captcha:
+    build-token-cache:
+      name: 'dactiv:service:resource:captcha:build-token:'
+      expires-time:
+        value: 10
+        unit: MINUTES
+    interceptor-token-cache:
+      name: 'dactiv:service:resource:captcha:interceptor-token:'
+      expires-time:
+        value: 10
+        unit: MINUTES
+  spring:
+    web:
+      mvc:
+        filter-view-base-packages: com.github.dactiv.service.resource.domain.domain
+    security:
+      plugin:
+        base-packages: com.github.dactiv.service.resource.controller
+        generate-sources:
+          - "CONSOLE"
+          - "SYSTEM"
+        parent:
+          config:
+            name: "基础配置"
+            type: Root
+            icon: "icon-terminal"
+            sources:
+              - "CONSOLE"
+          resource:
+            name: "资源管理"
+            type: Root
+            icon: "icon-system-file"
+            sources:
+              - "CONSOLE"
+      permit-uri-ant-matchers:
+        - "/actuator/**"
+        - "/findDataDictionariesByTypeId/**"
+        - "/findGroupDataDictionariesByTypeId/**"
+        - "/findMdmDataDictionariesByTypeId/**"
+        - "/findMdmGroupDataDictionariesByTypeId/**"
+        - "/findMdmMedicalInstitution/**"
+        - "/findDataDictionaries/**"
+        - "/getDataDictionary/**"
+        - "/getMdmDataDictionary/**"
+        - "/getServiceEnumerate/**"
+        - "/getServiceEnumerates/**"
+        - "/attachment/query/**"
+        - "/attachment/captchaUpload/**"
+        - "/avatar/get/**"
+        - "/avatar/getPrincipal/**"
+        - "/captcha/**"
+        - "/access/crypto/findAccessCrypto/**"
+        - "/access/crypto/getPublicToken/**"
+        - "/access/crypto/getAccessToken/**"
+        - "/tianai-captcha.css/**"
+  idempotent:
+    ignore-classes: org.springframework.security.core.context.SecurityContext
+  enumerate:
+    base-packages:
+      - com.github.dactiv.service.commons.service.enumerate
+      - com.github.dactiv.framework.security.enumerate
+      - com.github.dactiv.framework.commons.enumerate

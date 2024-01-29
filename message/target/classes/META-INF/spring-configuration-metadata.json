@@ -1,0 +1,175 @@
+{
+  "groups": [
+    {
+      "name": "dactiv.service.message",
+      "type": "com.github.dactiv.service.message.config.ApplicationConfig",
+      "sourceType": "com.github.dactiv.service.message.config.ApplicationConfig"
+    },
+    {
+      "name": "dactiv.service.message.mail",
+      "type": "com.github.dactiv.service.message.config.MailConfig",
+      "sourceType": "com.github.dactiv.service.message.config.MailConfig"
+    },
+    {
+      "name": "dactiv.service.message.site",
+      "type": "com.github.dactiv.service.message.config.SiteConfig",
+      "sourceType": "com.github.dactiv.service.message.config.SiteConfig"
+    },
+    {
+      "name": "dactiv.service.message.sms",
+      "type": "com.github.dactiv.service.message.config.SmsConfig",
+      "sourceType": "com.github.dactiv.service.message.config.SmsConfig"
+    },
+    {
+      "name": "dactiv.service.message.sms.tencent",
+      "type": "com.github.dactiv.service.message.config.SmsConfig$TencentConfig",
+      "sourceType": "com.github.dactiv.service.message.config.SmsConfig"
+    }
+  ],
+  "properties": [
+    {
+      "name": "dactiv.service.message.app.sms.tencent.endpoint",
+      "type": "java.lang.String",
+      "sourceType": "com.github.dactiv.service.message.config.SmsConfig$TencentConfig"
+    },
+    {
+      "name": "dactiv.service.message.app.sms.tencent.region",
+      "type": "java.lang.String",
+      "sourceType": "com.github.dactiv.service.message.config.SmsConfig$TencentConfig"
+    },
+    {
+      "name": "dactiv.service.message.app.sms.tencent.sdk-app-id",
+      "type": "java.lang.String",
+      "sourceType": "com.github.dactiv.service.message.config.SmsConfig$TencentConfig"
+    },
+    {
+      "name": "dactiv.service.message.app.sms.tencent.sign",
+      "type": "java.lang.String",
+      "sourceType": "com.github.dactiv.service.message.config.SmsConfig$TencentConfig"
+    },
+    {
+      "name": "dactiv.service.message.app.sms.tencent.template-id",
+      "type": "java.lang.String",
+      "sourceType": "com.github.dactiv.service.message.config.SmsConfig$TencentConfig"
+    },
+    {
+      "name": "dactiv.service.message.mail.accounts",
+      "type": "java.util.Map<java.lang.String,org.springframework.boot.autoconfigure.mail.MailProperties>",
+      "description": "邮箱配置",
+      "sourceType": "com.github.dactiv.service.message.config.MailConfig"
+    },
+    {
+      "name": "dactiv.service.message.mail.default-encoding",
+      "type": "java.nio.charset.Charset",
+      "description": "Default MimeMessage encoding.",
+      "sourceType": "com.github.dactiv.service.message.config.MailConfig"
+    },
+    {
+      "name": "dactiv.service.message.mail.host",
+      "type": "java.lang.String",
+      "description": "SMTP server host. For instance, `smtp.example.com`.",
+      "sourceType": "com.github.dactiv.service.message.config.MailConfig"
+    },
+    {
+      "name": "dactiv.service.message.mail.jndi-name",
+      "type": "java.lang.String",
+      "description": "Session JNDI name. When set, takes precedence over other Session settings.",
+      "sourceType": "com.github.dactiv.service.message.config.MailConfig"
+    },
+    {
+      "name": "dactiv.service.message.mail.max-retry-count",
+      "type": "java.lang.Integer",
+      "sourceType": "com.github.dactiv.service.message.config.MailConfig"
+    },
+    {
+      "name": "dactiv.service.message.mail.personal",
+      "type": "java.lang.String",
+      "description": "邮件发送人名称",
+      "sourceType": "com.github.dactiv.service.message.config.MailConfig"
+    },
+    {
+      "name": "dactiv.service.message.mail.port",
+      "type": "java.lang.Integer",
+      "description": "SMTP server port.",
+      "sourceType": "com.github.dactiv.service.message.config.MailConfig"
+    },
+    {
+      "name": "dactiv.service.message.mail.properties",
+      "type": "java.util.Map<java.lang.String,java.lang.String>",
+      "description": "Additional JavaMail Session properties.",
+      "sourceType": "com.github.dactiv.service.message.config.MailConfig"
+    },
+    {
+      "name": "dactiv.service.message.mail.protocol",
+      "type": "java.lang.String",
+      "description": "Protocol used by the SMTP server.",
+      "sourceType": "com.github.dactiv.service.message.config.MailConfig"
+    },
+    {
+      "name": "dactiv.service.message.site.channel",
+      "type": "java.util.List<java.lang.String>",
+      "description": "渠道商",
+      "sourceType": "com.github.dactiv.service.message.config.SiteConfig"
+    },
+    {
+      "name": "dactiv.service.message.site.max-retry-count",
+      "type": "java.lang.Integer",
+      "sourceType": "com.github.dactiv.service.message.config.SiteConfig"
+    },
+    {
+      "name": "dactiv.service.message.site.success-status",
+      "type": "java.util.List<java.lang.Integer>",
+      "description": "成功状态",
+      "sourceType": "com.github.dactiv.service.message.config.SiteConfig"
+    },
+    {
+      "name": "dactiv.service.message.sms.channel",
+      "type": "java.lang.String",
+      "description": "渠道商",
+      "sourceType": "com.github.dactiv.service.message.config.SmsConfig"
+    },
+    {
+      "name": "dactiv.service.message.sms.max-retry-count",
+      "type": "java.lang.Integer",
+      "sourceType": "com.github.dactiv.service.message.config.SmsConfig"
+    },
+    {
+      "name": "dactiv.service.message.sms.send-captcha-type",
+      "type": "java.lang.String",
+      "description": "发送短信验证码类型",
+      "sourceType": "com.github.dactiv.service.message.config.SmsConfig"
+    },
+    {
+      "name": "dactiv.service.message.sms.tencent.endpoint",
+      "type": "java.lang.String",
+      "sourceType": "com.github.dactiv.service.message.config.SmsConfig$TencentConfig"
+    },
+    {
+      "name": "dactiv.service.message.sms.tencent.region",
+      "type": "java.lang.String",
+      "sourceType": "com.github.dactiv.service.message.config.SmsConfig$TencentConfig"
+    },
+    {
+      "name": "dactiv.service.message.sms.tencent.sdk-app-id",
+      "type": "java.lang.String",
+      "sourceType": "com.github.dactiv.service.message.config.SmsConfig$TencentConfig"
+    },
+    {
+      "name": "dactiv.service.message.sms.tencent.sign",
+      "type": "java.lang.String",
+      "sourceType": "com.github.dactiv.service.message.config.SmsConfig$TencentConfig"
+    },
+    {
+      "name": "dactiv.service.message.sms.tencent.template-id",
+      "type": "java.lang.String",
+      "sourceType": "com.github.dactiv.service.message.config.SmsConfig$TencentConfig"
+    },
+    {
+      "name": "dactiv.service.message.tencent-cloud",
+      "type": "com.github.dactiv.service.commons.service.domain.meta.CloudSecurityMeta",
+      "description": "腾讯云配置",
+      "sourceType": "com.github.dactiv.service.message.config.ApplicationConfig"
+    }
+  ],
+  "hints": []
+}

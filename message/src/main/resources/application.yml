@@ -1,0 +1,43 @@
+mybatis-plus:
+  type-aliases-package: com.github.dactiv.service.message.domain.entity
+  configuration:
+    call-setters-on-nulls: on
+    default-enum-type-handler: com.github.dactiv.framework.mybatis.handler.NameValueEnumTypeHandler
+  global-config:
+    db-config:
+      id-type: auto
+    banner: "off"
+
+dactiv:
+  captcha:
+    controller:
+      enabled: false
+  spring:
+    web:
+      mvc:
+        filter-view-base-packages: com.github.dactiv.service.message.domain
+    security:
+      plugin:
+        base-packages: com.github.dactiv.service.message.controller
+        generate-sources:
+          - "CONSOLE"
+          - "SYSTEM"
+        parent:
+          message:
+            name: '消息管理'
+            icon: 'icon-message'
+            type: Security
+            sources:
+              - "CONSOLE"
+      permit-uri-ant-matchers:
+        - "/actuator/**"
+  idempotent:
+    ignore-classes: org.springframework.security.core.context.SecurityContext
+  enumerate:
+    base-packages: com.github.dactiv.service.message.enumerate
+
+info:
+  version: @version@
+  name: @name@
+  artifact-id: ${spring.application.name}
+  group-id: @groupId@

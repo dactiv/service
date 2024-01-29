@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <springProperty scope="context" name="logName" source="spring.application.name" defaultValue="localhost"/>
+    <springProperty scope="context" name="path" source="spring.application.logging.path"
+                    defaultValue="${user.home}/mdm-server"/>
+
+    <!-- 控制台日志输出设置 -->
+    <appender name="CONSOLE-APPENDER" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%yellow(%d) [%green(%t)] %highlight(%-5p) [%cyan(%c:%L)] - %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <springProfile name="default">
+        <logger name="com.github.dactiv.framework" level="DEBUG"/>
+        <logger name="com.github.dactiv.service.commons.service" level="DEBUG"/>
+        <logger name="com.github.dactiv.service.authentication" level="DEBUG"/>
+        <root level="INFO">
+            <appender-ref ref="CONSOLE-APPENDER"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="test">
+        <logger name="com.github.dactiv.service.authentication" level="INFO"/>
+        <appender name="FILE-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>${path}/${logName}.log</file>
+            <append>true</append>
+            <encoder>
+                <pattern>%d [%t] %-5p %c:%L - %m%n</pattern>
+            </encoder>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>${path}/${logName}.%d{yyyy-MM-dd}.part_%i.log</fileNamePattern>
+                <maxHistory>30</maxHistory>
+                <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                    <maxFileSize>5MB</maxFileSize>
+                </timeBasedFileNamingAndTriggeringPolicy>
+            </rollingPolicy>
+        </appender>
+        <root level="INFO">
+            <appender-ref ref="CONSOLE-APPENDER"/>
+            <appender-ref ref="FILE-APPENDER"/>
+        </root>
+    </springProfile>
+
+</configuration>
