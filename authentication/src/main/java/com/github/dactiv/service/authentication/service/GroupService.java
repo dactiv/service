@@ -12,6 +12,7 @@ import com.github.dactiv.service.commons.service.domain.meta.IdRoleAuthorityMeta
 import com.github.dactiv.service.commons.service.enumerate.ResourceSourceEnum;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,10 +34,11 @@ import java.util.stream.Collectors;
  * @since 2021-11-25 02:42:57
  */
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Lazy)
 @Transactional(rollbackFor = Exception.class, propagation = Propagation.NOT_SUPPORTED, readOnly = true)
 public class GroupService extends BasicService<GroupDao, GroupEntity> {
 
+    @Lazy
     private final AuthorizationService authorizationService;
 
     private final ApplicationConfig config;

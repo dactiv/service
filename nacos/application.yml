@@ -10,6 +10,9 @@ management:
         include: "*"
 
 spring:
+  threads:
+    virtual:
+      enabled: true
   aop:
     proxy-target-class: true
   jackson:
@@ -23,14 +26,15 @@ spring:
       fail-on-unknown-properties: false
 
 dactiv:
+  security:
+    audit:
+      type: elasticsearch
   spring:
     security:
       users:
         - name: feign
           password: "dactiv#INNER@feign.160826"
-          roles: "BASIC"
-      audit:
-        type: elasticsearch
+          roles: "FEIGN"
       authentication-cache:
         name: "dactiv:service:spring:security:authentication:"
         expires-time:

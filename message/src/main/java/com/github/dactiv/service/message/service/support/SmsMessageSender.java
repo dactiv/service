@@ -77,7 +77,7 @@ public class SmsMessageSender extends BatchMessageSender<SmsMessageBody, SmsMess
     @RabbitListener(
             bindings = @QueueBinding(
                     value = @Queue(value = DEFAULT_QUEUE_NAME, durable = "true"),
-                    exchange = @Exchange(value = SystemConstants.MESSAGE_RABBIT_MQ_EXCHANGE),
+                    exchange = @Exchange(value = SystemConstants.MESSAGE_RABBIT_EXCHANGE),
                     key = DEFAULT_QUEUE_NAME
             )
     )
@@ -165,7 +165,7 @@ public class SmsMessageSender extends BatchMessageSender<SmsMessageBody, SmsMess
 
     @Override
     protected RestResult<Object> send(List<SmsMessageEntity> entities) {
-        entities.forEach(e -> amqpTemplate.convertAndSend(SystemConstants.MESSAGE_RABBIT_MQ_EXCHANGE, DEFAULT_MESSAGE_COUNT_KEY, e.getId()));
+        entities.forEach(e -> amqpTemplate.convertAndSend(SystemConstants.MESSAGE_RABBIT_EXCHANGE, DEFAULT_MESSAGE_COUNT_KEY, e.getId()));
 
         return RestResult.ofSuccess(
                 "发送 " + entities.size() + " 条短信消息完成",

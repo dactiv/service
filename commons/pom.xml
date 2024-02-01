@@ -37,6 +37,12 @@
 
         <dependency>
             <groupId>com.github.dactiv.framework.starter</groupId>
+            <artifactId>spring-boot-starter-captcha</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.dactiv.framework.starter</groupId>
             <artifactId>spring-boot-starter-alibaba-nacos</artifactId>
             <optional>true</optional>
         </dependency>

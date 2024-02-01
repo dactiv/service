@@ -79,7 +79,7 @@ public class SiteMessageSender extends BatchMessageSender<SiteMessageBody, SiteM
     @RabbitListener(
             bindings = @QueueBinding(
                     value = @Queue(value = DEFAULT_QUEUE_NAME, durable = "true"),
-                    exchange = @Exchange(value = SystemConstants.MESSAGE_RABBIT_MQ_EXCHANGE),
+                    exchange = @Exchange(value = SystemConstants.MESSAGE_RABBIT_EXCHANGE),
                     key = DEFAULT_QUEUE_NAME
             )
     )
@@ -215,7 +215,7 @@ public class SiteMessageSender extends BatchMessageSender<SiteMessageBody, SiteM
     @Override
     protected RestResult<Object> send(List<SiteMessageEntity> entities) {
 
-        entities.forEach(e -> amqpTemplate.convertAndSend(SystemConstants.MESSAGE_RABBIT_MQ_EXCHANGE, DEFAULT_MESSAGE_COUNT_KEY, e.getId()));
+        entities.forEach(e -> amqpTemplate.convertAndSend(SystemConstants.MESSAGE_RABBIT_EXCHANGE, DEFAULT_MESSAGE_COUNT_KEY, e.getId()));
 
         return RestResult.ofSuccess(
                 "发送 " + entities.size() + " 条站内信消息完成",

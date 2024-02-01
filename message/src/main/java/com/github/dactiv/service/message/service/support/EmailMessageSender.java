@@ -75,7 +75,7 @@ public class EmailMessageSender extends BatchMessageSender<EmailMessageBody, Ema
 
     @Override
     protected RestResult<Object> send(List<EmailMessageEntity> entities) {
-        entities.forEach(e -> amqpTemplate.convertAndSend(SystemConstants.MESSAGE_RABBIT_MQ_EXCHANGE, DEFAULT_MESSAGE_COUNT_KEY, e.getId()));
+        entities.forEach(e -> amqpTemplate.convertAndSend(SystemConstants.MESSAGE_RABBIT_EXCHANGE, DEFAULT_MESSAGE_COUNT_KEY, e.getId()));
         return RestResult.ofSuccess(
                 "发送 " + entities.size() + " 条邮件消息完成",
                 entities.stream().map(BasicMessageEntity::getId).collect(Collectors.toList())
@@ -95,7 +95,7 @@ public class EmailMessageSender extends BatchMessageSender<EmailMessageBody, Ema
     @RabbitListener(
             bindings = @QueueBinding(
                     value = @Queue(value = DEFAULT_QUEUE_NAME, durable = "true"),
-                    exchange = @Exchange(value = SystemConstants.MESSAGE_RABBIT_MQ_EXCHANGE),
+                    exchange = @Exchange(value = SystemConstants.MESSAGE_RABBIT_EXCHANGE),
                     key = DEFAULT_QUEUE_NAME
             )
     )

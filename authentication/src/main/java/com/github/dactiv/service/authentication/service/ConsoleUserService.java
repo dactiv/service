@@ -19,6 +19,7 @@ import com.github.dactiv.service.commons.service.enumerate.ResourceSourceEnum;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.stereotype.Service;
@@ -42,10 +43,11 @@ import java.util.stream.Collectors;
  * @since 2021-11-25 02:42:57
  */
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Lazy)
 @Transactional(rollbackFor = Exception.class, propagation = Propagation.NOT_SUPPORTED, readOnly = true)
 public class ConsoleUserService extends BasicService<ConsoleUserDao, ConsoleUserEntity> implements SystemUserResolver {
 
+    @Lazy
     @Getter
     private final AuthorizationService authorizationService;
 

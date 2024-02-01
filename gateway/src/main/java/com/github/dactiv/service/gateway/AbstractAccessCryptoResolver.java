@@ -41,12 +41,11 @@ import java.util.stream.Collectors;
  * @author maurice
  */
 @Slf4j
-@SuppressWarnings({"rawtypes", "unchecked"})
 public abstract class AbstractAccessCryptoResolver implements AccessCryptoResolver {
 
     private final ApplicationConfig config;
 
-    private final List<RoutePredicateFactory> predicates;
+    private final List<RoutePredicateFactory<Object>> predicates;
 
     private final CipherAlgorithmService cipherAlgorithmService;
 
@@ -55,7 +54,7 @@ public abstract class AbstractAccessCryptoResolver implements AccessCryptoResolv
     private final ExpressionParser parser = new SpelExpressionParser();
 
     public AbstractAccessCryptoResolver(ApplicationConfig config,
-                                        List<RoutePredicateFactory> predicates,
+                                        List<RoutePredicateFactory<Object>> predicates,
                                         ObjectProvider<CipherAlgorithmService> cipherAlgorithmService) {
         this.config = config;
         this.predicates = predicates;
@@ -77,7 +76,7 @@ public abstract class AbstractAccessCryptoResolver implements AccessCryptoResolv
      * @param predicates 路由条件集合
      * @return 断言条件
      */
-    private Optional<Predicate<ServerWebExchange>> createPredicate(AccessCryptoPredicate acp, List<RoutePredicateFactory> predicates) {
+    private Optional<Predicate<ServerWebExchange>> createPredicate(AccessCryptoPredicate acp, List<RoutePredicateFactory<Object>> predicates) {
 
         return predicates
                 .stream()
@@ -93,7 +92,7 @@ public abstract class AbstractAccessCryptoResolver implements AccessCryptoResolv
      * @param acp 访问加解密断言
      * @return 断言条件
      */
-    private Predicate<ServerWebExchange> createPredicate(RoutePredicateFactory p, AccessCryptoPredicate acp) {
+    private Predicate<ServerWebExchange> createPredicate(RoutePredicateFactory<Object> p, AccessCryptoPredicate acp) {
 
         String value = acp.getValue();
 

@@ -32,6 +32,7 @@ dactiv:
           userinfo:
             - "principal"
         consent-page-uri: /authentication/oauth2/consent
+        enabled: true
       captcha-verification:
         verify-urls: "/login/**"
       plugin:

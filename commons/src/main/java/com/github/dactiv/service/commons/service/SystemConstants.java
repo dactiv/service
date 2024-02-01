@@ -24,13 +24,16 @@ public interface SystemConstants {
     /**
      * 默认 rabbit mq 交换机名称
      */
-    String RABBIT_MQ_EXCHANGE_NAME = "dactiv_service";
+    String RABBIT_EXCHANGE_NAME = "dactiv_service";
 
     /**
      * 认证系统名称
      */
     String SYS_AUTHENTICATION_NAME = "authentication";
 
+    /**
+     * 数据采集系统名称
+     */
     String SYS_GATHER_NAME = "gather";
 
     /**
@@ -51,17 +54,22 @@ public interface SystemConstants {
     /**
      * 认证服务 rabbit mq topic
      */
-    String AUTHENTICATION_RABBIT_MQ_EXCHANGE = RABBIT_MQ_EXCHANGE_NAME + Casts.UNDERSCORE + SYS_AUTHENTICATION_NAME;
+    String AUTHENTICATION_RABBIT_EXCHANGE = RABBIT_EXCHANGE_NAME + Casts.UNDERSCORE + SYS_AUTHENTICATION_NAME;
 
     /**
      * 资源服务 rabbit mq 交换机
      */
-    String RESOURCE_RABBIT_MQ_EXCHANGE = RABBIT_MQ_EXCHANGE_NAME + Casts.UNDERSCORE + SYS_RESOURCE_NAME;
+    String RESOURCE_RABBIT_EXCHANGE = RABBIT_EXCHANGE_NAME + Casts.UNDERSCORE + SYS_RESOURCE_NAME;
 
     /**
      * 消息服务 rabbit mq topic
      */
-    String MESSAGE_RABBIT_MQ_EXCHANGE = RABBIT_MQ_EXCHANGE_NAME + Casts.UNDERSCORE + SYS_MESSAGE_NAME;
+    String MESSAGE_RABBIT_EXCHANGE = RABBIT_EXCHANGE_NAME + Casts.UNDERSCORE + SYS_MESSAGE_NAME;
+
+    /**
+     * 采集服务 rabbit mq topic
+     */
+    String GATHER_RABBIT_EXCHANGE = RABBIT_EXCHANGE_NAME + Casts.UNDERSCORE + SYS_GATHER_NAME;
 
     /**
      * 电话号码正则表达式

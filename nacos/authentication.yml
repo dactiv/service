@@ -6,6 +6,8 @@ dactiv:
 spring:
   elasticsearch:
     uris: http://localhost:9200
+    username:
+    password:
   data:
     redis:
       host: localhost

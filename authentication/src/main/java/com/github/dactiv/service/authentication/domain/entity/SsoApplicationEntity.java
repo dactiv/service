@@ -39,22 +39,6 @@ public class SsoApplicationEntity extends IntegerVersionEntity<Integer> {
     private String merchantClientId;
 
     /**
-     * app id
-     *
-     * @deprecated 旧系统需要，兼容完新系统后删除该字段
-     */
-    @Deprecated
-    private String appKey;
-
-    /**
-     * app 密钥
-     *
-     * @deprecated 旧系统需要，兼容完新系统后删除该字段
-     */
-    @Deprecated
-    private String appSecret;
-
-    /**
      * icon 图标
      */
     private String icon;

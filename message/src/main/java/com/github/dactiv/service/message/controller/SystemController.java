@@ -12,7 +12,6 @@ import com.github.dactiv.service.message.resolver.MessageTypeResolver;
 import com.github.dactiv.service.message.service.MessageSender;
 import com.github.dactiv.service.message.service.attachment.AttachmentResolver;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.security.core.context.SecurityContext;
@@ -66,8 +65,8 @@ public class SystemController {
      * @param body http servlet request body
      * @return 消息结果集
      */
-    @PreAuthorize("hasRole('BASIC')")
-    @PostMapping(value = "send", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "send")
+    @PreAuthorize("hasRole('FEIGN')")
     @Plugin(name = "发送消息", id = "send", parent = "message")
     public RestResult<Object> send(@RequestBody Map<String, Object> body,
                                    @CurrentSecurityContext SecurityContext securityContext) throws Exception {
@@ -78,8 +77,20 @@ public class SystemController {
         return getMessageService(type).send(body);
     }
 
-    @PostMapping(value = "removeAttachment", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public RestResult<Object> removeAttachment(@RequestParam Integer id, @RequestParam String type, @RequestBody FileObject fileObject) {
+    /**
+     * 删除附件，同时删除实体附件内容的 feign api
+     *
+     * @param id 主键 id
+     * @param type 附件类型
+     * @param fileObject 附件内容
+     *
+     * @return rest 结果集
+     */
+    @PreAuthorize("hasRole('FEIGN')")
+    @PostMapping(value = "removeAttachment")
+    public RestResult<Object> removeAttachment(@RequestParam Integer id, 
+                                               @RequestParam String type, 
+                                               @RequestBody FileObject fileObject) {
         return getAttachmentResolver(type).removeAttachment(id, fileObject);
     }
 
@@ -97,6 +108,13 @@ public class SystemController {
                 .orElseThrow(() -> new ServiceException("找不到类型为[ " + type + " ]的消息发送服务"));
     }
 
+    /**
+     * 获取附件解析器
+     *
+     * @param type 解析器类型
+     *
+     * @return 附件解析器
+     */
     private AttachmentResolver getAttachmentResolver(String type) {
         return attachmentResolvers
                 .stream()

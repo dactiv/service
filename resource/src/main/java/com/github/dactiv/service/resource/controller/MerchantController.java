@@ -87,7 +87,7 @@ public class MerchantController {
      */
     @GetMapping("get")
     @Plugin(name = "编辑信息")
-    @PreAuthorize("hasAuthority('perms[merchant:get]') or hasRole('BASIC')")
+    @PreAuthorize("hasAuthority('perms[merchant:get]') or hasRole('FEIGN')")
     public MerchantEntity get(@RequestParam Integer id) {
         return merchantService.get(id);
     }

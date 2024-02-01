@@ -16,11 +16,11 @@ import com.github.dactiv.service.message.enumerate.AttachmentTypeEnum;
 import com.github.dactiv.service.message.service.BatchMessageService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.task.AsyncTaskExecutor;
 import org.springframework.http.HttpStatus;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * 批量消息发送的抽象实现，用于对需要创建 tb_batch_message 记录的消息做一个统一处理
@@ -45,7 +45,7 @@ public abstract class BatchMessageSender<T extends BasicMessageEntity, S extends
     /**
      * 线程池，用于批量发送消息时候异步使用。
      */
-    private ThreadPoolTaskExecutor threadPoolTaskExecutor;
+    private AsyncTaskExecutor asyncTaskExecutor;
 
     private final Class<S> sendEntityClass;
 
@@ -93,8 +93,9 @@ public abstract class BatchMessageSender<T extends BasicMessageEntity, S extends
             data.put(DEFAULT_BATCH_MESSAGE_ID_KEY, batchMessage.getId());
             data.put(DEFAULT_MESSAGE_COUNT_KEY, content.size());
 
-            threadPoolTaskExecutor.execute(() -> {
+            asyncTaskExecutor.execute(() -> {
                 batchMessageCreated(batchMessage, result, content);
+                // FIXME 这里可能会有事务问题
                 doSend(content);
             });
 
@@ -103,6 +104,7 @@ public abstract class BatchMessageSender<T extends BasicMessageEntity, S extends
                     data
             );
         } else {
+            // FIXME 这里可能会有事务问题
             RestResult<Object> sendResult = doSend(content);
             if (Objects.nonNull(sendResult)) {
                 restResult = sendResult;
@@ -262,13 +264,14 @@ public abstract class BatchMessageSender<T extends BasicMessageEntity, S extends
         this.resourceServiceFeignClient = resourceServiceFeignClient;
     }
 
-    public ThreadPoolTaskExecutor getThreadPoolTaskExecutor() {
-        return threadPoolTaskExecutor;
+    public AsyncTaskExecutor getAsyncTaskExecutor() {
+        return asyncTaskExecutor;
     }
 
     @Autowired
-    public void setThreadPoolTaskExecutor(ThreadPoolTaskExecutor threadPoolTaskExecutor) {
-        this.threadPoolTaskExecutor = threadPoolTaskExecutor;
+    @Qualifier("applicationTaskExecutor")
+    public void setAsyncTaskExecutor(AsyncTaskExecutor asyncTaskExecutor) {
+        this.asyncTaskExecutor = asyncTaskExecutor;
     }
 
     public Class<S> getSendEntityClass() {

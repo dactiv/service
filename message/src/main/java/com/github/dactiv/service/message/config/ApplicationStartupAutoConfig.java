@@ -10,12 +10,14 @@ import com.github.dactiv.service.commons.service.authentication.ResourceCaptchaV
 import com.github.dactiv.service.commons.service.feign.ResourceServiceFeignClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
  * 服务配置
  *
  * @author maurice.chen
  */
+@EnableAsync
 @Configuration
 public class ApplicationStartupAutoConfig {
 

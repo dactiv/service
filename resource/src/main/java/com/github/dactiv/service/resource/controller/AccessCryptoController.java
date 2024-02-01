@@ -102,7 +102,7 @@ public class AccessCryptoController {
      * @return 通讯加解密 集合
      */
     @GetMapping("getAll")
-    @PreAuthorize("hasRole('BASIC')")
+    @PreAuthorize("hasRole('FEIGN')")
     public List<AccessCryptoEntity> getAll() {
         return accessCryptoService.getAll();
     }
@@ -168,7 +168,7 @@ public class AccessCryptoController {
      * @param id token id
      * @return 访问 token
      */
-    @PreAuthorize("hasRole('BASIC')")
+    @PreAuthorize("hasRole('FEIGN')")
     @GetMapping("obtainAccessToken")
     public AccessToken obtainAccessToken(@RequestParam String id) {
         return accessCryptoService.getAccessTokeBucket(id).get();

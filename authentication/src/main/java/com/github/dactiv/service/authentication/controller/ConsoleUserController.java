@@ -82,7 +82,7 @@ public class ConsoleUserController {
      * @return 用户实体
      */
     @GetMapping("get")
-    @PreAuthorize("hasRole('BASIC') or hasAuthority('perms[console_user:get]')")
+    @PreAuthorize("hasRole('FEIGN') or hasAuthority('perms[console_user:get]')")
     @Plugin(name = "编辑信息/查看明细")
     public ConsoleUserEntity get(@RequestParam Integer id) {
 

@@ -27,6 +27,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
@@ -44,7 +45,7 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Component
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Lazy)
 public class PluginResourceService {
 
     /**
@@ -56,6 +57,7 @@ public class PluginResourceService {
 
     private final NacosSpringEventManager nacosSpringEventManager;
 
+    @Lazy
     private final AuthorizationService authorizationService;
 
     private final List<PluginResourceInterceptor> pluginResourceInterceptor;

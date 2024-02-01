@@ -29,7 +29,6 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Component
-@SuppressWarnings({"rawtypes", "unchecked"})
 public class RedisAccessCryptoResolver extends AbstractAccessCryptoResolver implements InitializingBean {
 
     private final RedissonReactiveClient redissonClient;
@@ -39,7 +38,7 @@ public class RedisAccessCryptoResolver extends AbstractAccessCryptoResolver impl
     private final List<AccessCrypto> cache = new ArrayList<>();
 
     public RedisAccessCryptoResolver(ApplicationConfig config,
-                                     ObjectProvider<RoutePredicateFactory> predicates,
+                                     ObjectProvider<RoutePredicateFactory<Object>> predicates,
                                      ObjectProvider<CipherAlgorithmService> cipherAlgorithmService,
                                      RedissonReactiveClient redissonClient,
                                      ApplicationConfig applicationConfig) {

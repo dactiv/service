@@ -44,7 +44,7 @@ public class ValidAuthenticationInfoConsumer {
     @RabbitListener(
             bindings = @QueueBinding(
                     value = @Queue(value = DEFAULT_QUEUE_NAME, durable = "true"),
-                    exchange = @Exchange(value = SystemConstants.AUTHENTICATION_RABBIT_MQ_EXCHANGE),
+                    exchange = @Exchange(value = SystemConstants.AUTHENTICATION_RABBIT_EXCHANGE),
                     key = DEFAULT_QUEUE_NAME
             )
     )
@@ -68,7 +68,7 @@ public class ValidAuthenticationInfoConsumer {
 
     public static void sendMessage(AmqpTemplate amqpTemplate, AuthenticationInfoEntity info) {
         amqpTemplate.convertAndSend(
-                SystemConstants.AUTHENTICATION_RABBIT_MQ_EXCHANGE,
+                SystemConstants.AUTHENTICATION_RABBIT_EXCHANGE,
                 DEFAULT_QUEUE_NAME,
                 info,
                 message -> {

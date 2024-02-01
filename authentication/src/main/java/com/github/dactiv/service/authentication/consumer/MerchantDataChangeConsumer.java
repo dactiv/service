@@ -39,7 +39,7 @@ public class MerchantDataChangeConsumer {
     @RabbitListener(
             bindings = @QueueBinding(
                     value = @Queue(value = DEFAULT_DATA_CHANGE_QUEUE_NAME, durable = "true"),
-                    exchange = @Exchange(value = SystemConstants.AUTHENTICATION_RABBIT_MQ_EXCHANGE),
+                    exchange = @Exchange(value = SystemConstants.AUTHENTICATION_RABBIT_EXCHANGE),
                     key = DEFAULT_DATA_CHANGE_QUEUE_NAME
             )
     )
@@ -51,7 +51,7 @@ public class MerchantDataChangeConsumer {
     @RabbitListener(
             bindings = @QueueBinding(
                     value = @Queue(value = DEFAULT_DATA_DELETE_QUEUE_NAME, durable = "true"),
-                    exchange = @Exchange(value = SystemConstants.AUTHENTICATION_RABBIT_MQ_EXCHANGE),
+                    exchange = @Exchange(value = SystemConstants.AUTHENTICATION_RABBIT_EXCHANGE),
                     key = DEFAULT_DATA_DELETE_QUEUE_NAME
             )
     )

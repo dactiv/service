@@ -16,6 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.util.Assert;
 import org.springframework.validation.Validator;
 
@@ -69,6 +70,7 @@ public abstract class AbstractMessageCaptchaService<T extends MessageType> exten
         super.setCaptchaProperties(captchaProperties);
     }
 
+    @Lazy
     @Override
     @Autowired
     public void setInterceptor(Interceptor interceptor) {

@@ -70,7 +70,7 @@ public class AuthenticationInfoController {
      * @return 认证信息实体
      */
     @PostMapping("getLastByUserDetails")
-    @PreAuthorize("hasRole('BASIC')")
+    @PreAuthorize("hasRole('FEIGN')")
     public AuthenticationInfoEntity getLastByUserDetails(@RequestBody BasicUserDetails<Integer> userDetails) {
         return authenticationInfoService.getLastByUserDetails(userDetails);
     }
