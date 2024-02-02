@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInt
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.github.dactiv.framework.mybatis.plus.interceptor.LastModifiedDateInnerInterceptor;
 import com.github.dactiv.service.commons.service.authentication.ResourceCaptchaVerificationService;
+import com.github.dactiv.service.commons.service.config.CommonsConfig;
 import com.github.dactiv.service.commons.service.feign.ResourceServiceFeignClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,7 +36,8 @@ public class ApplicationStartupAutoConfig {
     }
 
     @Bean
-    public ResourceCaptchaVerificationService captchaVerificationService(ResourceServiceFeignClient resourceServiceFeignClient) {
-        return new ResourceCaptchaVerificationService(resourceServiceFeignClient);
+    public ResourceCaptchaVerificationService captchaVerificationService(ResourceServiceFeignClient resourceServiceFeignClient,
+                                                                         CommonsConfig commonsConfig) {
+        return new ResourceCaptchaVerificationService(resourceServiceFeignClient, commonsConfig);
     }
 }

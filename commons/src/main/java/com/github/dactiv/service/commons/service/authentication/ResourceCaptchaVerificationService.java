@@ -3,12 +3,12 @@ package com.github.dactiv.service.commons.service.authentication;
 import com.github.dactiv.framework.captcha.filter.CaptchaVerificationService;
 import com.github.dactiv.framework.commons.Casts;
 import com.github.dactiv.framework.commons.RestResult;
+import com.github.dactiv.service.commons.service.config.CommonsConfig;
 import com.github.dactiv.service.commons.service.feign.ResourceServiceFeignClient;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.Assert;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -19,17 +19,19 @@ import java.util.Map;
  */
 public class ResourceCaptchaVerificationService implements CaptchaVerificationService {
 
-    public static final List<String> DEFAULT_TYPE = Arrays.asList("tianai", "tencentSms", "email");
+    private final CommonsConfig commonsConfig;
 
     private final ResourceServiceFeignClient resourceServiceFeignClient;
 
-    public ResourceCaptchaVerificationService(ResourceServiceFeignClient resourceServiceFeignClient) {
+    public ResourceCaptchaVerificationService(ResourceServiceFeignClient resourceServiceFeignClient,
+                                              CommonsConfig commonsConfig) {
         this.resourceServiceFeignClient = resourceServiceFeignClient;
+        this.commonsConfig = commonsConfig;
     }
 
     @Override
     public List<String> getType() {
-        return DEFAULT_TYPE;
+        return commonsConfig.getCaptchaVerificationType();
     }
 
     @Override

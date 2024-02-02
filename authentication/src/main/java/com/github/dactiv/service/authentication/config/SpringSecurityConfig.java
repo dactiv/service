@@ -11,13 +11,14 @@ import org.springframework.security.config.annotation.web.configurers.RememberMe
 import org.springframework.security.config.annotation.web.configurers.SessionManagementConfigurer;
 import org.springframework.session.Session;
 import org.springframework.session.security.SpringSessionBackedSessionRegistry;
+import org.springframework.stereotype.Component;
 
 /**
  * 自定义 spring security 的配置
  *
  * @author maurice.chen
  */
-//@Component
+@Component
 @RequiredArgsConstructor
 public class SpringSecurityConfig implements WebSecurityConfigurerAfterAdapter {
 

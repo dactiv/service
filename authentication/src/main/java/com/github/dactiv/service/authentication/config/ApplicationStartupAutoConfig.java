@@ -7,14 +7,11 @@ import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInt
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.github.dactiv.framework.mybatis.plus.interceptor.LastModifiedDateInnerInterceptor;
 import com.github.dactiv.service.commons.service.authentication.ResourceCaptchaVerificationService;
+import com.github.dactiv.service.commons.service.config.CommonsConfig;
 import com.github.dactiv.service.commons.service.feign.ResourceServiceFeignClient;
-import org.redisson.api.RedissonClient;
-import org.redisson.spring.session.RedissonSessionRepository;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
@@ -44,8 +41,9 @@ public class ApplicationStartupAutoConfig {
     }
 
     @Bean
-    public ResourceCaptchaVerificationService captchaVerificationService(ResourceServiceFeignClient resourceServiceFeignClient) {
-        return new ResourceCaptchaVerificationService(resourceServiceFeignClient);
+    public ResourceCaptchaVerificationService captchaVerificationService(ResourceServiceFeignClient resourceServiceFeignClient,
+                                                                         CommonsConfig commonsConfig) {
+        return new ResourceCaptchaVerificationService(resourceServiceFeignClient, commonsConfig);
     }
 
     @Bean

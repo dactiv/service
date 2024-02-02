@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 公共配置信息
@@ -26,6 +28,11 @@ public class CommonsConfig {
      * 数据加解密密钥
      */
     private String dataCryptoKey = "SHprakA0MzA5LgAAAAAAAA==";
+
+    /**
+     * 统一验证码校验类型，用于在调用某些接口时，需要校验指定的验证码且验证成功后才能访问时使用
+     */
+    private List<String> captchaVerificationType = Arrays.asList("tianai", "email");
 
     /**
      * 重置密码长度
