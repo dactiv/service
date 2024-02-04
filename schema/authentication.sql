@@ -45,7 +45,7 @@ CREATE TABLE `tb_console_user` (
   UNIQUE KEY `ux_username` (`username`) USING BTREE,
   UNIQUE KEY `ux_email` (`email`) USING BTREE,
   UNIQUE KEY `ux_phone_number` (`phone_number`) USING BTREE
-) ENGINE=InnoDB COMMENT='后台用户表';
+) ENGINE=InnoDB COMMENT='后台用户，后台管理系统用户。';
 
 -- ----------------------------
 -- Records of tb_console_user
@@ -74,7 +74,7 @@ CREATE TABLE `tb_group` (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `ux_name` (`name`) USING BTREE,
   UNIQUE KEY `ux_authority` (`authority`) USING BTREE
-) ENGINE=InnoDB COMMENT='用户组表';
+) ENGINE=InnoDB COMMENT='用户组, 用户权限管理。';
 
 -- ----------------------------
 -- Records of tb_group
