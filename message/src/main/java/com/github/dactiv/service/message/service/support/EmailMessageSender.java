@@ -92,6 +92,12 @@ public class EmailMessageSender extends BatchMessageSender<EmailMessageBody, Ema
         return result.stream().flatMap(this::createEmailMessageEntity).collect(Collectors.toList());
     }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public RestResult<Object> doSend(List<EmailMessageEntity> content) {
+        return super.doSend(content);
+    }
+
     @RabbitListener(
             bindings = @QueueBinding(
                     value = @Queue(value = DEFAULT_QUEUE_NAME, durable = "true"),

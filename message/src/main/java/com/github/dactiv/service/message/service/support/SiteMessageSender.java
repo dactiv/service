@@ -87,6 +87,12 @@ public class SiteMessageSender extends BatchMessageSender<SiteMessageBody, SiteM
         super.sendMessage(id);
     }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public RestResult<Object> doSend(List<SiteMessageEntity> content) {
+        return super.doSend(content);
+    }
+
     /**
      * 发送站内信
      *

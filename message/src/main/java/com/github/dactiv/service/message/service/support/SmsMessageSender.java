@@ -85,6 +85,12 @@ public class SmsMessageSender extends BatchMessageSender<SmsMessageBody, SmsMess
         super.sendMessage(id);
     }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public RestResult<Object> doSend(List<SmsMessageEntity> content) {
+        return super.doSend(content);
+    }
+
     /**
      * 发送短信
      *

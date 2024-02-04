@@ -93,18 +93,13 @@ public abstract class BatchMessageSender<T extends BasicMessageEntity, S extends
             data.put(DEFAULT_BATCH_MESSAGE_ID_KEY, batchMessage.getId());
             data.put(DEFAULT_MESSAGE_COUNT_KEY, content.size());
 
-            asyncTaskExecutor.execute(() -> {
-                batchMessageCreated(batchMessage, result, content);
-                // FIXME 这里可能会有事务问题
-                doSend(content);
-            });
+            asyncTaskExecutor.execute(() -> this.asyncTaskSend(batchMessage, result, content));
 
             restResult = RestResult.ofSuccess(
                     "发送" + content.size() + "条 [" + getMessageType() + "] 消息成功",
                     data
             );
         } else {
-            // FIXME 这里可能会有事务问题
             RestResult<Object> sendResult = doSend(content);
             if (Objects.nonNull(sendResult)) {
                 restResult = sendResult;
@@ -112,6 +107,11 @@ public abstract class BatchMessageSender<T extends BasicMessageEntity, S extends
         }
 
         return restResult;
+    }
+
+    private void asyncTaskSend(BatchMessageEntity batchMessage, List<T> result, List<S> content) {
+        batchMessageCreated(batchMessage, result, content);
+        doSend(content);
     }
 
     public RestResult<Object> doSend(List<S> content) {
