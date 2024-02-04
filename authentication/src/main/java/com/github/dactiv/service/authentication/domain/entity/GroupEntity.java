@@ -15,6 +15,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.apache.ibatis.type.Alias;
 import org.hibernate.validator.constraints.Length;
 
@@ -30,6 +31,7 @@ import java.util.*;
  */
 @Data
 @Alias("group")
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @TableName(value = "tb_group", autoResultMap = true)
 public class GroupEntity extends IntegerVersionEntity<Integer> implements Tree<Integer, GroupEntity> {

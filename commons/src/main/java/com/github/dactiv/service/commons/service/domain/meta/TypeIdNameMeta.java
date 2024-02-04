@@ -4,6 +4,7 @@ package com.github.dactiv.service.commons.service.domain.meta;
 import com.github.dactiv.framework.security.entity.TypeUserDetails;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 
@@ -13,6 +14,7 @@ import java.io.Serial;
  * @author maurice.chen
  */
 @Data
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class TypeIdNameMeta extends IdNameMeta {
 

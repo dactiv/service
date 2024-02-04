@@ -6,6 +6,7 @@ import com.github.dactiv.framework.commons.enumerate.support.YesOrNo;
 import com.github.dactiv.service.authentication.enumerate.AccessTokenFormatEnum;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
 import org.springframework.security.oauth2.server.authorization.settings.ConfigurationSettingNames;
 import org.springframework.security.oauth2.server.authorization.settings.OAuth2TokenFormat;
@@ -24,6 +25,7 @@ import java.util.concurrent.TimeUnit;
  * @author maurice.chen
  */
 @Data
+@NoArgsConstructor
 public class MerchantTokenSettings implements Serializable {
 
     @Serial

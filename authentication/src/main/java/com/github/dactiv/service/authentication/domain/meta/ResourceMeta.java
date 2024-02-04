@@ -9,6 +9,7 @@ import com.github.dactiv.service.commons.service.enumerate.ResourceSourceEnum;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 
@@ -24,6 +25,7 @@ import java.util.List;
  * @since 2020-04-13 09:48:05
  */
 @Data
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class ResourceMeta extends IdEntity<String> implements Tree<String, ResourceMeta> {
 

@@ -2,7 +2,6 @@ package com.github.dactiv.service.resource.domain.body;
 
 import com.github.dactiv.framework.commons.minio.FilenameObject;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.io.Serial;
@@ -16,6 +15,7 @@ import java.util.List;
  * @author maurice.chen
  */
 @Data
+@NoArgsConstructor
 public class SendAttachmentEmailRequestBody implements Serializable {
 
     @Serial

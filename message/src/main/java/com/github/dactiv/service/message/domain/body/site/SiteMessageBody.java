@@ -9,6 +9,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import java.util.Map;
  * @author maurice.chen
  */
 @Data
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class SiteMessageBody extends BasicMessageEntity implements AttachmentMessage {
 

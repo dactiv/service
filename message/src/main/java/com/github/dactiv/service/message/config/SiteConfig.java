@@ -1,6 +1,7 @@
 package com.github.dactiv.service.message.config;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,7 @@ import java.util.List;
  */
 @Data
 @Component
+@NoArgsConstructor
 @ConfigurationProperties("dactiv.service.message.site")
 public class SiteConfig {
 

@@ -10,6 +10,7 @@ import com.github.dactiv.service.commons.service.domain.meta.LocationIpRegionMet
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.util.Date;
@@ -23,6 +24,7 @@ import java.util.Map;
  * @since 2020-06-01 09:22:12
  */
 @Data
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @TableName(value = "tb_authentication_info", autoResultMap = true)
 public class AuthenticationInfoEntity extends BasicUserDetails<Integer> implements BasicIdentification<String>, IpAddressDetails {

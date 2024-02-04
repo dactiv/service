@@ -6,10 +6,10 @@ import com.github.dactiv.service.commons.service.domain.meta.IdValueMeta;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.math.BigDecimal;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -18,6 +18,7 @@ import java.util.List;
  * @author maurice
  */
 @Data
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor(staticName = "of")
 public class SmsBalanceMeta extends IdEntity<String> {

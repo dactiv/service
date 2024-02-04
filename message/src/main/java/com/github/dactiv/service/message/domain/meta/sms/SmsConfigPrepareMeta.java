@@ -1,6 +1,7 @@
 package com.github.dactiv.service.message.domain.meta.sms;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -11,6 +12,7 @@ import java.io.Serializable;
  * @author maurice.chen
  */
 @Data
+@NoArgsConstructor
 public class SmsConfigPrepareMeta implements Serializable {
 
     @Serial

@@ -7,6 +7,7 @@ import com.github.dactiv.framework.commons.id.number.NumberIdEntity;
 import com.github.dactiv.framework.crypto.access.AccessCryptoPredicate;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.apache.ibatis.type.Alias;
 
 import java.io.Serial;
@@ -20,9 +21,10 @@ import java.util.Date;
  * @since 2021-05-06 11:59:41
  */
 @Data
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 @Alias("configAccessCryptoPredicate")
 @TableName("tb_access_crypto_predicate")
-@EqualsAndHashCode(callSuper = true)
 public class AccessCryptoPredicateEntity extends AccessCryptoPredicate implements NumberIdEntity<Integer> {
 
     @Serial

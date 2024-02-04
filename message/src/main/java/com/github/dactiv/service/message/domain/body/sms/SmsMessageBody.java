@@ -6,6 +6,7 @@ import com.github.dactiv.service.message.domain.entity.BasicMessageEntity;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.util.LinkedList;
@@ -17,6 +18,7 @@ import java.util.List;
  * @author maurice.chen
  */
 @Data
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SmsMessageBody extends BasicMessageEntity implements TypeUserDetails<Integer> {

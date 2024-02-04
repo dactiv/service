@@ -1,6 +1,7 @@
 package com.github.dactiv.service.message.config;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.boot.autoconfigure.mail.MailProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,7 @@ import java.util.Map;
  */
 @Data
 @Component
+@NoArgsConstructor
 @ConfigurationProperties("dactiv.service.message.mail")
 public class MailConfig {
 

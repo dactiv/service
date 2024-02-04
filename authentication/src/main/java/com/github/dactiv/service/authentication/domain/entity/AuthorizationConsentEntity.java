@@ -10,6 +10,7 @@ import com.github.dactiv.framework.mybatis.plus.baisc.VersionEntity;
 import com.github.dactiv.framework.security.entity.BasicUserDetails;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.apache.ibatis.type.Alias;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -30,6 +31,7 @@ import java.util.stream.Collectors;
  * @since 2023-11-28 03:46:21
  */
 @Data
+@NoArgsConstructor
 @Alias("authorizationConsent")
 @EqualsAndHashCode(callSuper = true)
 @TableName(value = "tb_authorization_consent", autoResultMap = true)

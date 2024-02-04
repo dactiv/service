@@ -6,6 +6,7 @@ import com.github.dactiv.framework.crypto.algorithm.ByteSource;
 import com.github.dactiv.framework.crypto.algorithm.cipher.AesCipherService;
 import com.github.dactiv.framework.crypto.algorithm.cipher.OperationMode;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +22,7 @@ import java.util.List;
  */
 @Data
 @Component
+@NoArgsConstructor
 @ConfigurationProperties("dactiv.service.commons")
 public class CommonsConfig {
 

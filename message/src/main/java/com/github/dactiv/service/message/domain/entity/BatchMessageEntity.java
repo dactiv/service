@@ -8,6 +8,7 @@ import com.github.dactiv.framework.commons.id.IdEntity;
 import com.github.dactiv.service.message.enumerate.AttachmentTypeEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.apache.ibatis.type.Alias;
 
 import java.io.Serial;
@@ -22,6 +23,7 @@ import java.util.Date;
  * @since 2021-08-22 04:45:14
  */
 @Data
+@NoArgsConstructor
 @Alias("batchMessage")
 @TableName("tb_batch_message")
 @EqualsAndHashCode(callSuper = true)

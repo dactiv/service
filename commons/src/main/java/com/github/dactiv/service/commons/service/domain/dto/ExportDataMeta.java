@@ -8,6 +8,7 @@ import com.github.dactiv.framework.security.entity.BasicUserDetails;
 import com.github.dactiv.service.commons.service.enumerate.ImportExportTypeEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.springframework.transaction.interceptor.RuleBasedTransactionAttribute;
 import org.springframework.util.AntPathMatcher;
 
@@ -23,6 +24,7 @@ import java.util.UUID;
  * @author maurice.chen
  */
 @Data
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class ExportDataMeta extends BasicUserDetails<Integer> implements BasicIdentification<String>, ExecuteStatus.Body, Retryable {
 

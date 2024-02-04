@@ -7,6 +7,7 @@ import com.github.dactiv.framework.mybatis.plus.baisc.support.IntegerVersionEnti
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.apache.ibatis.type.Alias;
 
 import java.io.Serial;
@@ -18,6 +19,7 @@ import java.io.Serial;
  * @since 2023-09-11 08:57:11
  */
 @Data
+@NoArgsConstructor
 @Alias("merchant")
 @TableName("tb_merchant")
 @EqualsAndHashCode(callSuper = true)

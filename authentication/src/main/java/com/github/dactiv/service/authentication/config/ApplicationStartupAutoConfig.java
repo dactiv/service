@@ -53,6 +53,7 @@ public class ApplicationStartupAutoConfig {
         redisTemplate.setConnectionFactory(redisConnectionFactory);
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setValueSerializer(new JdkSerializationRedisSerializer());
+        redisTemplate.afterPropertiesSet();
 
         return new SpringSessionBackedSessionRegistry<>(new RedisIndexedSessionRepository(redisTemplate));
     }

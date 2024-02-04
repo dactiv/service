@@ -7,6 +7,7 @@ import com.github.dactiv.service.commons.service.enumerate.MessageTypeEnum;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.util.Date;
@@ -17,6 +18,7 @@ import java.util.Date;
  * @author maurice.chen
  */
 @Data
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class BasicMessageEntity extends IntegerVersionEntity<Integer> implements Retryable, ExecuteStatus.Body {
 

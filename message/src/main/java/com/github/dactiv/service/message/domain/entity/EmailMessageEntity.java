@@ -10,6 +10,7 @@ import com.github.dactiv.service.message.domain.AttachmentMessage;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.apache.ibatis.type.Alias;
 
 import java.io.Serial;
@@ -25,6 +26,7 @@ import java.util.List;
  * @since 2020-05-06 11:59:41
  */
 @Data
+@NoArgsConstructor
 @Alias("emailMessage")
 @TableName(value = "tb_email_message", autoResultMap = true)
 @EqualsAndHashCode(callSuper = true)

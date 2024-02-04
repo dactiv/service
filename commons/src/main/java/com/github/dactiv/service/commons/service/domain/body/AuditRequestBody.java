@@ -2,6 +2,7 @@ package com.github.dactiv.service.commons.service.domain.body;
 
 import com.github.dactiv.service.commons.service.enumerate.AuditStatusEnum;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -14,6 +15,7 @@ import java.io.Serializable;
  */
 
 @Data
+@NoArgsConstructor
 public class AuditRequestBody implements Serializable {
 
     @Serial

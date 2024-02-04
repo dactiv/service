@@ -8,6 +8,7 @@ import com.github.dactiv.framework.mybatis.plus.baisc.support.IntegerVersionEnti
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.apache.ibatis.type.Alias;
 import org.hibernate.validator.constraints.Length;
 
@@ -23,6 +24,7 @@ import java.util.List;
  * @since 2021-05-06 11:59:41
  */
 @Data
+@NoArgsConstructor
 @Alias("dictionaryType")
 @TableName("tb_dictionary_type")
 @EqualsAndHashCode(callSuper = true)

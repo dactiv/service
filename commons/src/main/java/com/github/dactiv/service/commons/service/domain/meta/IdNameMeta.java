@@ -7,6 +7,7 @@ import com.github.dactiv.framework.commons.id.IdEntity;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.util.Objects;
@@ -17,6 +18,7 @@ import java.util.Objects;
  * @author maurice.chen
  */
 @Data
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class IdNameMeta extends IdEntity<Integer> {
 

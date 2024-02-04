@@ -10,6 +10,7 @@ import com.github.dactiv.framework.mybatis.handler.JacksonJsonTypeHandler;
 import com.github.dactiv.service.commons.service.domain.meta.ResourceDictionaryMeta;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.util.LinkedHashMap;
@@ -23,6 +24,7 @@ import java.util.Map;
  * @author maurice.chen
  */
 @Data
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class DataDictionaryMeta extends ResourceDictionaryMeta implements BasicIdentification<Integer>, Tree<Integer, DataDictionaryMeta> {
 

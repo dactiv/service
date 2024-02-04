@@ -4,6 +4,7 @@ import com.github.dactiv.service.commons.service.domain.meta.ConstructionCaptcha
 import com.github.dactiv.service.message.domain.meta.sms.SmsConfigPrepareMeta;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 
@@ -13,6 +14,7 @@ import java.io.Serial;
  * @author maurice.chen
  */
 @Data
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class SmsConfigPrepareResponseBody extends SmsConfigPrepareMeta {
 

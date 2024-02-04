@@ -2,6 +2,7 @@ package com.github.dactiv.service.commons.service.domain.meta;
 
 import com.github.dactiv.framework.commons.Casts;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serial;
@@ -16,6 +17,7 @@ import java.util.stream.Stream;
  * @author maurice.chen
  */
 @Data
+@NoArgsConstructor
 public class RegionMeta implements Serializable {
 
     @Serial

@@ -7,6 +7,7 @@ import com.github.dactiv.service.message.domain.entity.BasicMessageEntity;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import java.util.List;
  * @author maurice.chen
  */
 @Data
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class EmailMessageBody extends BasicMessageEntity implements AttachmentMessage, TypeUserDetails<Integer> {
 

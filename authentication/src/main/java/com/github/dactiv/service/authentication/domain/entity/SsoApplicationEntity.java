@@ -10,6 +10,7 @@ import com.github.dactiv.service.authentication.enumerate.SsoApplicationTypeEnum
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.apache.ibatis.type.Alias;
 
 import java.io.Serial;
@@ -24,6 +25,7 @@ import java.util.Map;
  * @since 2023-11-29 10:22:33
  */
 @Data
+@NoArgsConstructor
 @Alias("ssoApplication")
 @EqualsAndHashCode(callSuper = true)
 @TableName(value = "tb_sso_application", autoResultMap = true)

@@ -6,6 +6,7 @@ import com.github.dactiv.framework.crypto.AlgorithmProperties;
 import com.github.dactiv.framework.crypto.RsaProperties;
 import com.github.dactiv.service.commons.service.SystemConstants;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +21,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Data
 @Component
+@NoArgsConstructor
 @ConfigurationProperties("dactiv.service.resource")
 public class ApplicationConfig {
 

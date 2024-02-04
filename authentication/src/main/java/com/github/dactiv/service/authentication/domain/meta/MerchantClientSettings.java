@@ -6,6 +6,7 @@ import com.github.dactiv.framework.commons.enumerate.support.YesOrNo;
 import com.github.dactiv.service.authentication.enumerate.TokenEndpointAuthenticationSigningAlgorithmTypeEnum;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.oauth2.jose.jws.JwsAlgorithm;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
@@ -24,6 +25,7 @@ import java.util.Objects;
  * @author maurice.chen
  */
 @Data
+@NoArgsConstructor
 public class MerchantClientSettings implements Serializable {
 
     @Serial

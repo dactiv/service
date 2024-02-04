@@ -6,6 +6,7 @@ import com.github.dactiv.framework.mybatis.handler.JacksonJsonTypeHandler;
 import com.github.dactiv.framework.security.entity.TypeUserDetails;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.apache.ibatis.type.Alias;
 
 import java.io.Serial;
@@ -20,6 +21,7 @@ import java.util.Map;
  * @since 2020-05-06 11:59:41
  */
 @Data
+@NoArgsConstructor
 @Alias("smsMessage")
 @TableName(value = "tb_sms_message", autoResultMap = true)
 @EqualsAndHashCode(callSuper = true)

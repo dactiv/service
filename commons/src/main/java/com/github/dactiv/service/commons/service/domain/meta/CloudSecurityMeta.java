@@ -1,6 +1,7 @@
 package com.github.dactiv.service.commons.service.domain.meta;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -12,6 +13,7 @@ import java.io.Serializable;
  */
 
 @Data
+@NoArgsConstructor
 public class CloudSecurityMeta implements Serializable {
 
     @Serial

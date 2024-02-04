@@ -10,6 +10,7 @@ import com.github.dactiv.framework.security.entity.TypeUserDetails;
 import com.github.dactiv.service.message.domain.AttachmentMessage;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.apache.ibatis.type.Alias;
 
 import java.io.Serial;
@@ -26,6 +27,7 @@ import java.util.Map;
  * @since 2020-05-06 03:48:46
  */
 @Data
+@NoArgsConstructor
 @Alias("siteMessage")
 @EqualsAndHashCode(callSuper = true)
 @TableName(value = "tb_site_message", autoResultMap = true)

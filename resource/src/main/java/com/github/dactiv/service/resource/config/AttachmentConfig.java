@@ -3,7 +3,6 @@ package com.github.dactiv.service.resource.config;
 import com.github.dactiv.framework.commons.CacheProperties;
 import com.github.dactiv.framework.commons.TimeProperties;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -20,7 +19,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Data
 @Component
-@EqualsAndHashCode
+@NoArgsConstructor
 @ConfigurationProperties("dactiv.service.resource.attachment")
 public class AttachmentConfig {
 
@@ -84,7 +83,6 @@ public class AttachmentConfig {
      * @author maurice.chen
      */
     @Data
-    @EqualsAndHashCode
     @NoArgsConstructor
     public static class Result {
 

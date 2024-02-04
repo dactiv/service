@@ -5,6 +5,7 @@ import com.github.dactiv.framework.commons.TimeProperties;
 import com.github.dactiv.service.commons.service.SecurityUserDetailsConstants;
 import com.github.dactiv.service.commons.service.SystemConstants;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +19,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Data
 @Component
+@NoArgsConstructor
 @ConfigurationProperties("dactiv.service.authentication")
 public class ApplicationConfig {
 

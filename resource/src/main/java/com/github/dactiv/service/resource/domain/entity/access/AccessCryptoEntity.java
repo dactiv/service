@@ -9,6 +9,7 @@ import com.github.dactiv.framework.crypto.access.AccessCrypto;
 import com.github.dactiv.framework.crypto.access.AccessCryptoPredicate;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.apache.ibatis.type.Alias;
 
 import java.io.Serial;
@@ -24,6 +25,7 @@ import java.util.List;
  * @since 2021-05-06 11:59:41
  */
 @Data
+@NoArgsConstructor
 @Alias("configAccessCrypto")
 @TableName("tb_access_crypto")
 @EqualsAndHashCode(callSuper = true)

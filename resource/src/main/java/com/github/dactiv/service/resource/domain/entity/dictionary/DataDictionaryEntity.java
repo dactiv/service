@@ -8,6 +8,7 @@ import com.github.dactiv.service.resource.domain.meta.DataDictionaryMeta;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.apache.ibatis.type.Alias;
 
 import java.io.Serial;
@@ -21,6 +22,7 @@ import java.util.Date;
  * @since 2021-05-06 11:59:41
  */
 @Data
+@NoArgsConstructor
 @Alias("dataDictionary")
 @EqualsAndHashCode(callSuper = true)
 @TableName(value = "tb_data_dictionary", autoResultMap = true)

@@ -6,6 +6,7 @@ import com.github.dactiv.framework.security.entity.RoleAuthority;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 
@@ -16,6 +17,7 @@ import java.io.Serial;
  * @author maurice.chen
  */
 @Data
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class IdRoleAuthorityMeta extends RoleAuthority implements BasicIdentification<Integer> {
 

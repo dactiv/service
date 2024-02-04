@@ -3,6 +3,7 @@ package com.github.dactiv.service.commons.service.domain.meta;
 import com.github.dactiv.framework.commons.enumerate.support.YesOrNo;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -14,6 +15,7 @@ import java.io.Serializable;
  */
 
 @Data
+@NoArgsConstructor
 public class UserInitializationMeta implements Serializable {
 
     @Serial

@@ -13,6 +13,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.type.Alias;
 import org.hibernate.validator.constraints.Length;
@@ -28,6 +29,7 @@ import java.util.Map;
  * @since 2020-04-13 10:14:46
  */
 @Data
+@NoArgsConstructor
 @Alias("consoleUser")
 @EqualsAndHashCode(callSuper = true)
 @TableName(value = "tb_console_user", autoResultMap = true)

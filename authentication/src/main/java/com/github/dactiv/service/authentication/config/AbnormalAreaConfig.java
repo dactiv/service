@@ -2,6 +2,7 @@ package com.github.dactiv.service.authentication.config;
 
 import com.github.dactiv.service.commons.service.enumerate.MessageTypeEnum;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Component;
  */
 @Data
 @Component
+@NoArgsConstructor
 @ConfigurationProperties("dactiv.service.authentication.abnormal-area")
 public class AbnormalAreaConfig {
 

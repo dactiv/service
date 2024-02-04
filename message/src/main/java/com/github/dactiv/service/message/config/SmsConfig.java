@@ -4,6 +4,7 @@ package com.github.dactiv.service.message.config;
 import com.github.dactiv.service.message.domain.meta.sms.SmsConfigPrepareMeta;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +12,7 @@ import java.io.Serial;
 
 @Data
 @Component
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ConfigurationProperties(prefix = "dactiv.service.message.sms")
 public class SmsConfig extends SmsConfigPrepareMeta {
@@ -36,6 +38,7 @@ public class SmsConfig extends SmsConfigPrepareMeta {
     private TencentConfig tencent = new TencentConfig();
 
     @Data
+    @NoArgsConstructor
     public static class TencentConfig {
 
         private String sdkAppId;

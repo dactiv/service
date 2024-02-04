@@ -9,6 +9,7 @@ import com.github.dactiv.service.commons.service.SystemConstants;
 import com.github.dactiv.service.commons.service.feign.MessageServiceFeignClient;
 import com.github.dactiv.service.commons.service.feign.ResourceServiceFeignClient;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -26,6 +27,7 @@ import java.util.Map;
  * @author maurice.chen
  */
 @Data
+@NoArgsConstructor
 @RequiredArgsConstructor(staticName = "of")
 public class ConstructionCaptchaMeta implements Serializable {
 

@@ -2,10 +2,7 @@ package com.github.dactiv.service.authentication.enumerate;
 
 import com.github.dactiv.framework.commons.enumerate.NameValueEnum;
 import com.github.dactiv.service.authentication.OidcScopesConstants;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
+import lombok.*;
 import org.springframework.security.oauth2.core.oidc.OidcScopes;
 
 import java.io.Serial;
@@ -45,6 +42,7 @@ public enum RegisteredClientScopeEnum implements NameValueEnum<String> {
 
 
     @Data
+    @NoArgsConstructor
     @AllArgsConstructor
     public static class Description implements Serializable {
 

@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -16,8 +16,8 @@ import java.io.Serializable;
  * @author maurice.chen
  */
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
 public class TencentSmsRequestBody implements Serializable {
 
     @Serial

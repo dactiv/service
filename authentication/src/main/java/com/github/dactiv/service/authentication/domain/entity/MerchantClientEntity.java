@@ -23,6 +23,7 @@ import com.github.dactiv.service.authentication.enumerate.RegisteredClientScopeE
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.ibatis.type.Alias;
@@ -50,6 +51,7 @@ import java.util.stream.Collectors;
  * @since 2023-11-22 03:21:13
  */
 @Data
+@NoArgsConstructor
 @Alias("merchantRegisteredClient")
 @EqualsAndHashCode(callSuper = true)
 @TableName(value = "tb_merchant_client", autoResultMap = true)

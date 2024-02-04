@@ -2,6 +2,7 @@ package com.github.dactiv.service.commons.service.domain.meta;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.util.LinkedHashMap;
@@ -13,6 +14,7 @@ import java.util.Map;
  * @author maurice.chen
  */
 @Data
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class AddressRegionMeta extends RegionMeta {
 
