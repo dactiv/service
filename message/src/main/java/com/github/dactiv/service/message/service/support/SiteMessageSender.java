@@ -45,7 +45,7 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor(onConstructor_ = @Lazy)
 public class SiteMessageSender extends BatchMessageSender<SiteMessageBody, SiteMessageEntity> {
 
-    public static final String DEFAULT_QUEUE_NAME = "site_message_send";
+    public static final String DEFAULT_QUEUE_NAME = SystemConstants.MESSAGE_RABBIT_EXCHANGE + Casts.UNDERSCORE + "site_send";
 
     public static final String BATCH_UPDATE_CONCURRENT_KEY = "dactiv:service:message:site:batch-update:";
 

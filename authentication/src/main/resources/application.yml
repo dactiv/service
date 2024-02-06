@@ -31,7 +31,6 @@ dactiv:
             - "details"
           userinfo:
             - "principal"
-        consent-page-uri: /authentication/oauth2/consent
         enabled: true
       plugin:
         base-packages: com.github.dactiv.service.authentication.controller

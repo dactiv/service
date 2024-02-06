@@ -1,6 +1,5 @@
 package com.github.dactiv.service.authentication.security.handler;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.github.dactiv.framework.commons.Casts;
 import com.github.dactiv.framework.commons.RestResult;
 import com.github.dactiv.framework.commons.jackson.serializer.DesensitizeSerializer;
@@ -12,7 +11,9 @@ import com.github.dactiv.framework.spring.web.mvc.SpringMvcUtils;
 import com.github.dactiv.service.authentication.consumer.ValidAuthenticationInfoConsumer;
 import com.github.dactiv.service.authentication.domain.entity.AuthenticationInfoEntity;
 import com.github.dactiv.service.commons.service.SecurityUserDetailsConstants;
+import com.github.dactiv.service.commons.service.SystemConstants;
 import com.github.dactiv.service.commons.service.domain.meta.IpRegionMeta;
+import com.github.dactiv.service.commons.service.domain.meta.LocationIpRegionMeta;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -62,11 +63,14 @@ public class CaptchaAuthenticationSuccessResponse implements JsonAuthenticationS
         AuthenticationInfoEntity info = new AuthenticationInfoEntity();
         info.setDevice(device.toMap());
         info.setMeta(new LinkedHashMap<>(userDetails.getMeta()));
-        info.setIpRegionMeta(Casts.convertValue(IpRegionMeta.of(ip), new TypeReference<>() {
-        }));
+        info.setIpRegionMeta(Casts.convertValue(IpRegionMeta.of(ip), LocationIpRegionMeta.class));
         info.setUserDetails(SecurityUserDetailsConstants.toBasicUserDetails(userDetails));
 
-        ValidAuthenticationInfoConsumer.sendMessage(amqpTemplate, info);
+        amqpTemplate.convertAndSend(
+                SystemConstants.AUTHENTICATION_RABBIT_EXCHANGE,
+                ValidAuthenticationInfoConsumer.DEFAULT_QUEUE_NAME,
+                Casts.writeValueAsString(info)
+        );
 
         postSecurityUserDetails(userDetails);
     }

@@ -6,15 +6,19 @@ import com.github.dactiv.framework.crypto.CipherAlgorithmService;
 import com.github.dactiv.framework.crypto.algorithm.Base64;
 import com.github.dactiv.framework.crypto.algorithm.cipher.AesCipherService;
 import com.github.dactiv.framework.mybatis.plus.service.BasicService;
+import com.github.dactiv.service.commons.service.SystemConstants;
 import com.github.dactiv.service.resource.config.ApplicationConfig;
 import com.github.dactiv.service.resource.dao.MerchantDao;
 import com.github.dactiv.service.resource.domain.entity.MerchantEntity;
 import lombok.RequiredArgsConstructor;
 import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionSynchronization;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.util.Assert;
 import org.springframework.util.DigestUtils;
 
@@ -44,6 +48,8 @@ public class MerchantService extends BasicService<MerchantDao, MerchantEntity> {
 
     private final RedissonClient redissonClient;
 
+    private final AmqpTemplate amqpTemplate;
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int insert(MerchantEntity entity) {
@@ -52,7 +58,7 @@ public class MerchantService extends BasicService<MerchantDao, MerchantEntity> {
         String text = entity.getName() + CacheProperties.DEFAULT_SEPARATOR + System.currentTimeMillis();
         String appId = DigestUtils.md5DigestAsHex(text.getBytes(StandardCharsets.UTF_8));
         entity.setAppId(appId);
-        Key key = cipherService.generateKey(applicationConfig.getMerchantAesKeySize());
+        Key key = cipherService.generateKey();
         entity.setAppKey(Base64.encodeToString(key.getEncoded()));
         return super.insert(entity);
     }
@@ -60,7 +66,19 @@ public class MerchantService extends BasicService<MerchantDao, MerchantEntity> {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int save(MerchantEntity entity) {
-        return super.save(entity);
+        int result = super.save(entity);
+        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+            @Override
+            public void afterCommit() {
+                amqpTemplate.convertAndSend(
+                        SystemConstants.RESOURCE_RABBIT_EXCHANGE,
+                        SystemConstants.MERCHANT_DATA_CHANGE_QUEUE_NAME,
+                        entity
+                );
+            }
+        });
+
+        return result;
     }
 
     @Override
@@ -79,6 +97,39 @@ public class MerchantService extends BasicService<MerchantDao, MerchantEntity> {
     @Transactional(rollbackFor = Exception.class)
     public int deleteByEntity(Collection<MerchantEntity> entities, boolean errorThrow) {
         return super.deleteByEntity(entities, errorThrow);
+    }
+
+    @Override
+    public int deleteByEntity(MerchantEntity entity) {
+        int result = super.deleteByEntity(entity);
+        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+            @Override
+            public void afterCommit() {
+                amqpTemplate.convertAndSend(
+                        SystemConstants.RESOURCE_RABBIT_EXCHANGE,
+                        SystemConstants.MERCHANT_DATA_DELETE_QUEUE_NAME,
+                        entity.getId()
+                );
+            }
+        });
+        return result;
+    }
+
+    @Override
+    public int deleteById(Serializable id) {
+        int result = super.deleteById(id);
+        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+            @Override
+            public void afterCommit() {
+                amqpTemplate.convertAndSend(
+                        SystemConstants.RESOURCE_RABBIT_EXCHANGE,
+                        SystemConstants.MERCHANT_DATA_DELETE_QUEUE_NAME,
+                        id
+                );
+            }
+        });
+
+        return result;
     }
 
     private RBucket<MerchantEntity> getRedissonBucket(String appId) {

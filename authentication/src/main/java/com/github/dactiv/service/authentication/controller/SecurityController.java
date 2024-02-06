@@ -7,10 +7,12 @@ import com.github.dactiv.framework.commons.exception.SystemException;
 import com.github.dactiv.framework.security.audit.PluginAuditEvent;
 import com.github.dactiv.framework.security.plugin.Plugin;
 import com.github.dactiv.framework.spring.security.authentication.UserDetailsService;
+import com.github.dactiv.framework.spring.security.authentication.config.OAuth2Properties;
 import com.github.dactiv.framework.spring.security.entity.SecurityUserDetails;
 import com.github.dactiv.service.authentication.enumerate.RegisteredClientScopeEnum;
 import com.github.dactiv.service.authentication.security.handler.CaptchaAuthenticationSuccessResponse;
 import com.github.dactiv.service.authentication.security.handler.JsonLogoutSuccessHandler;
+import com.github.dactiv.service.commons.service.SystemConstants;
 import com.github.dactiv.service.commons.service.enumerate.ResourceSourceEnum;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,7 @@ import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,6 +45,8 @@ import java.util.stream.Collectors;
 public class SecurityController {
 
     private final JsonLogoutSuccessHandler jsonLogoutSuccessHandler;
+
+    private final OAuth2Properties oAuth2Properties;
 
     private final CaptchaAuthenticationSuccessResponse captchaAuthenticationSuccessResponse;
 
@@ -82,13 +87,18 @@ public class SecurityController {
     @GetMapping("getPrincipal")
     @PreAuthorize("isAuthenticated()")
     public SecurityUserDetails getPrincipal(@CurrentSecurityContext SecurityContext securityContext) {
-        if (securityContext.getAuthentication().getDetails() instanceof SecurityUserDetails) {
-            SecurityUserDetails userDetails = Casts.cast(securityContext.getAuthentication().getDetails());
-            SecurityUserDetails returnValue = Casts.of(userDetails, SecurityUserDetails.class);
-            captchaAuthenticationSuccessResponse.postSecurityUserDetails(returnValue);
-            return returnValue;
+        Object details = securityContext.getAuthentication().getDetails();
+        if (!SecurityUserDetails.class.isAssignableFrom(details.getClass())) {
+            return null;
         }
-        return null;
+
+        SecurityUserDetails userDetails = Casts.cast(details);
+        // 由于 userDetails 是引用类型，更新后可能 session 值会发生
+        // 变更导致可能 redis 和当前 session 值不一致，复制一个新的做响应数据
+        SecurityUserDetails returnValue = Casts.of(userDetails, SecurityUserDetails.class);
+        captchaAuthenticationSuccessResponse.postSecurityUserDetails(returnValue);
+
+        return returnValue;
     }
 
     @ResponseBody
@@ -118,6 +128,9 @@ public class SecurityController {
         result.put(OAuth2ParameterNames.STATE, state);
         result.put(OAuth2ParameterNames.SCOPE, scopes);
         result.put(PluginAuditEvent.PRINCIPAL_FIELD_NAME, userDetails.toBasicUserDetails());
+
+        String consentPageUri = StringUtils.prependIfMissing(oAuth2Properties.getConsentPageUri(), AntPathMatcher.DEFAULT_PATH_SEPARATOR);
+        result.put(OAuth2ParameterNames.RESPONSE_TYPE, SystemConstants.SYS_AUTHENTICATION_NAME + consentPageUri);
 
         return result;
     }

@@ -78,8 +78,6 @@ public class ApplicationConfig {
      */
     private RsaProperties rsa;
 
-    private int merchantAesKeySize = 256;
-
     private String dictionarySeparator = ".";
 
     /**

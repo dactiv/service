@@ -57,7 +57,7 @@ public class EmailMessageSender extends BatchMessageSender<EmailMessageBody, Ema
     /**
      * 数据变更队列名称
      */
-    public static final String DEFAULT_QUEUE_NAME = "email_message_send";
+    public static final String DEFAULT_QUEUE_NAME = SystemConstants.MESSAGE_RABBIT_EXCHANGE + Casts.UNDERSCORE + "email_send";
 
     public static final String BATCH_UPDATE_CONCURRENT_KEY = "dactiv:service:message:email:batch-update:";
 
@@ -75,7 +75,7 @@ public class EmailMessageSender extends BatchMessageSender<EmailMessageBody, Ema
 
     @Override
     protected RestResult<Object> send(List<EmailMessageEntity> entities) {
-        entities.forEach(e -> amqpTemplate.convertAndSend(SystemConstants.MESSAGE_RABBIT_EXCHANGE, DEFAULT_MESSAGE_COUNT_KEY, e.getId()));
+        entities.forEach(e -> amqpTemplate.convertAndSend(SystemConstants.MESSAGE_RABBIT_EXCHANGE, DEFAULT_QUEUE_NAME, e.getId()));
         return RestResult.ofSuccess(
                 "发送 " + entities.size() + " 条邮件消息完成",
                 entities.stream().map(BasicMessageEntity::getId).collect(Collectors.toList())

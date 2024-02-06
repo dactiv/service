@@ -101,7 +101,7 @@ public class JsonLogoutSuccessHandler implements LogoutSuccessHandler {
     }
 
     /**
-     * 构造未授权 reset 结果集，目的为乱搞一通，让别人不知道这个是什么。
+     * 构造未授权 reset 结果集
      *
      * @param request 请求对象
      * @return rest 结果集
@@ -116,7 +116,7 @@ public class JsonLogoutSuccessHandler implements LogoutSuccessHandler {
             deviceId = request.getHeader(DeviceUtils.REQUEST_DEVICE_IDENTIFIED_HEADER_NAME);
         }
         if (StringUtils.isEmpty(deviceId)) {
-            deviceId = UUID.randomUUID().toString();
+            deviceId = request.getRequestedSessionId();
         }
 
         result.getData().put(DeviceUtils.REQUEST_DEVICE_IDENTIFIED_PARAM_NAME, deviceId);

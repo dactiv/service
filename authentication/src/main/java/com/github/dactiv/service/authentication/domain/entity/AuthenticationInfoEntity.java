@@ -29,10 +29,10 @@ import java.util.Map;
 @TableName(value = "tb_authentication_info", autoResultMap = true)
 public class AuthenticationInfoEntity extends BasicUserDetails<Integer> implements BasicIdentification<String>, IpAddressDetails {
 
-    public static final String ELASTICSEARCH_INDEX_NAME = "ix_authentication_info";
-
     @Serial
     private static final long serialVersionUID = 5548079224380108843L;
+
+    public static final String ELASTICSEARCH_INDEX_NAME = "ix_authentication_info";
 
     private String id;
 

@@ -72,6 +72,16 @@ public interface SystemConstants {
     String GATHER_RABBIT_EXCHANGE = RABBIT_EXCHANGE_NAME + Casts.UNDERSCORE + SYS_GATHER_NAME;
 
     /**
+     * 第三方商户数据变更队列名称
+     */
+    String MERCHANT_DATA_CHANGE_QUEUE_NAME = RABBIT_EXCHANGE_NAME + Casts.UNDERSCORE + "resource_merchant_data_change";
+
+    /**
+     * 第三方商户数据删除队列名称
+     */
+    String MERCHANT_DATA_DELETE_QUEUE_NAME = RABBIT_EXCHANGE_NAME + Casts.UNDERSCORE + "resource_merchant_data_delete";
+
+    /**
      * 电话号码正则表达式
      */
     String PHONE_NUMBER_REGULAR_EXPRESSION = "^1[3456789]\\d{9}$";
