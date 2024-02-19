@@ -12,6 +12,7 @@ import com.github.dactiv.service.authentication.consumer.ValidAuthenticationInfo
 import com.github.dactiv.service.authentication.domain.entity.AuthenticationInfoEntity;
 import com.github.dactiv.service.commons.service.SecurityUserDetailsConstants;
 import com.github.dactiv.service.commons.service.SystemConstants;
+import com.github.dactiv.service.commons.service.domain.meta.ElasticsearchSyncMeta;
 import com.github.dactiv.service.commons.service.domain.meta.IpRegionMeta;
 import com.github.dactiv.service.commons.service.domain.meta.LocationIpRegionMeta;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,16 +29,16 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * json 形式的认证失败具柄实现
+ * 认证成功的一些数据处理实现
  *
  * @author maurice.chen
  */
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class CaptchaAuthenticationSuccessResponse implements JsonAuthenticationSuccessResponse {
+public class AuthenticationSuccessResponse implements JsonAuthenticationSuccessResponse {
 
-    private final CaptchaAuthenticationFailureResponse jsonAuthenticationFailureHandler;
+    private final AuthenticationFailureResponse jsonAuthenticationFailureHandler;
 
     private final AmqpTemplate amqpTemplate;
 
@@ -70,6 +71,16 @@ public class CaptchaAuthenticationSuccessResponse implements JsonAuthenticationS
                 SystemConstants.AUTHENTICATION_RABBIT_EXCHANGE,
                 ValidAuthenticationInfoConsumer.DEFAULT_QUEUE_NAME,
                 Casts.writeValueAsString(info)
+        );
+
+        ElasticsearchSyncMeta meta = new ElasticsearchSyncMeta();
+        meta.setObject(Casts.convertValue(meta, Casts.MAP_TYPE_REFERENCE));
+        meta.setIndexName(AuthenticationInfoEntity.ELASTICSEARCH_INDEX_NAME);
+
+        amqpTemplate.convertAndSend(
+                SystemConstants.DMP_RABBIT_EXCHANGE,
+                SystemConstants.ELASTICSEARCH_SYNC_QUEUE_NAME,
+                Casts.writeValueAsString(meta)
         );
 
         postSecurityUserDetails(userDetails);

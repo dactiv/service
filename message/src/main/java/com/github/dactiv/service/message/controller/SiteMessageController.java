@@ -62,7 +62,7 @@ public class SiteMessageController {
      * @return 分页实体
      */
     @PostMapping("page")
-    @PreAuthorize("hasAuthority('perms[site:page]')")
+    @PreAuthorize("hasAuthority('perms[message_site:page]')")
     public Page<SiteMessageEntity> page(PageRequest pageRequest, HttpServletRequest request) {
         QueryWrapper<SiteMessageEntity> query = queryGenerator.getQueryWrapperByHttpRequest(request);
         query.orderByDesc(IdEntity.ID_FIELD_NAME);
@@ -105,7 +105,7 @@ public class SiteMessageController {
      * @return 按类型分组的未读数量
      */
     @GetMapping("unreadQuantity")
-    @PreAuthorize("hasRole('ORDINARY') or isAuthenticated()")
+    @PreAuthorize("isAuthenticated()")
     public Map<Integer, Long> unreadQuantity(@CurrentSecurityContext SecurityContext securityContext) {
         SecurityUserDetails userDetails = Casts.cast(securityContext.getAuthentication().getDetails());
         return siteMessageSender.getSiteMessageService().countUnreadQuantity(userDetails.toBasicUserDetails());
@@ -153,7 +153,7 @@ public class SiteMessageController {
      */
     @GetMapping("get")
     @Plugin(name = "编辑信息/查看明细")
-    @PreAuthorize("hasAuthority('perms[site:get]')")
+    @PreAuthorize("hasAuthority('perms[message_site:get]')")
     public SiteMessageEntity get(@RequestParam Integer id) {
         return siteMessageSender.getSiteMessageService().get(id);
     }
@@ -175,7 +175,7 @@ public class SiteMessageController {
      * @return 消息结果集
      */
     @PostMapping("delete")
-    @PreAuthorize("hasAuthority('perms[site:delete]')")
+    @PreAuthorize("hasAuthority('perms[message_site:delete]')")
     @Plugin(name = "删除信息", audit = true, operationDataTrace = true)
     @Idempotent(key = "message:site:delete:[#securityContext.authentication.details.id]")
     public RestResult<?> delete(@RequestParam List<Integer> ids,

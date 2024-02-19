@@ -1,0 +1,36 @@
+mybatis-plus:
+  type-aliases-package: com.github.dactiv.service.dmp.domain.entity
+  configuration:
+    call-setters-on-nulls: on
+    default-enum-type-handler: com.github.dactiv.framework.mybatis.handler.NameValueEnumTypeHandler
+  global-config:
+    db-config:
+      id-type: auto
+    banner: "off"
+
+dactiv:
+  captcha:
+    controller:
+      enabled: false
+  spring:
+    web:
+      mvc:
+        filter-view-base-packages: com.github.dactiv.service.dmp.domain
+    security:
+      plugin:
+        base-packages: com.github.dactiv.service.dmp.controller
+        generate-sources:
+          - "CONSOLE"
+          - "SYSTEM"
+      permit-uri-ant-matchers:
+        - "/actuator/**"
+  idempotent:
+    ignore-classes: org.springframework.security.core.context.SecurityContext
+  enumerate:
+    base-packages: com.github.dactiv.service.dmp.enumerate
+
+info:
+  version: @version@
+  name: @name@
+  artifact-id: ${spring.application.name}
+  group-id: @groupId@

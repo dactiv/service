@@ -10,7 +10,7 @@ import com.github.dactiv.framework.spring.security.authentication.UserDetailsSer
 import com.github.dactiv.framework.spring.security.authentication.config.OAuth2Properties;
 import com.github.dactiv.framework.spring.security.entity.SecurityUserDetails;
 import com.github.dactiv.service.authentication.enumerate.RegisteredClientScopeEnum;
-import com.github.dactiv.service.authentication.security.handler.CaptchaAuthenticationSuccessResponse;
+import com.github.dactiv.service.authentication.security.handler.AuthenticationSuccessResponse;
 import com.github.dactiv.service.authentication.security.handler.JsonLogoutSuccessHandler;
 import com.github.dactiv.service.commons.service.SystemConstants;
 import com.github.dactiv.service.commons.service.enumerate.ResourceSourceEnum;
@@ -48,7 +48,7 @@ public class SecurityController {
 
     private final OAuth2Properties oAuth2Properties;
 
-    private final CaptchaAuthenticationSuccessResponse captchaAuthenticationSuccessResponse;
+    private final AuthenticationSuccessResponse authenticationSuccessResponse;
 
     private final RegisteredClientRepository registeredClientRepository;
 
@@ -96,7 +96,7 @@ public class SecurityController {
         // 由于 userDetails 是引用类型，更新后可能 session 值会发生
         // 变更导致可能 redis 和当前 session 值不一致，复制一个新的做响应数据
         SecurityUserDetails returnValue = Casts.of(userDetails, SecurityUserDetails.class);
-        captchaAuthenticationSuccessResponse.postSecurityUserDetails(returnValue);
+        authenticationSuccessResponse.postSecurityUserDetails(returnValue);
 
         return returnValue;
     }
@@ -168,7 +168,7 @@ public class SecurityController {
      * @param id   用户 id
      */
     @PostMapping("adminRestPassword")
-    @PreAuthorize("hasAuthority('perms[system_user:admin_reset_password]')")
+    @PreAuthorize("hasAuthority('perms[authentication_system_user:admin_reset_password]')")
     @Plugin(name = "重置用户密码", sources = ResourceSourceEnum.CONSOLE_SOURCE_VALUE, audit = true, operationDataTrace = true, parent = "authority")
     public RestResult<String> adminRestPassword(String type, Integer id) {
 

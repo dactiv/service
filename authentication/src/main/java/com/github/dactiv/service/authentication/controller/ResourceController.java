@@ -53,7 +53,7 @@ public class ResourceController {
      * @return 资源实体集合
      */
     @PostMapping("find")
-    @PreAuthorize("hasAuthority('perms[resource:find]')")
+    @PreAuthorize("hasAuthority('perms[authentication_resource:find]')")
     public List<ResourceMeta> find(@RequestParam(required = false, defaultValue = "true") boolean mergeTree,
                                    @RequestParam(required = false) String applicationName,
                                    @RequestParam(required = false) List<String> sources) {
@@ -143,8 +143,8 @@ public class ResourceController {
      * @return 资源实体
      */
     @GetMapping("get")
-    @PreAuthorize("hasAuthority('perms[resource:get]')")
     @Plugin(name = "查看信息")
+    @PreAuthorize("hasAuthority('perms[authentication_resource:get]')")
     public ResourceMeta get(@RequestParam String id) {
 
         return authorizationService
@@ -162,7 +162,7 @@ public class ResourceController {
      */
     @PostMapping("syncPluginResource")
     @Plugin(name = "同步插件资源", audit = true)
-    @PreAuthorize("hasAuthority('perms[resource:sync_plugin_resource]')")
+    @PreAuthorize("hasAuthority('perms[authentication_resource:sync_plugin_resource]')")
     public RestResult<?> syncPluginResource() {
         authorizationService.getPluginResourceService().resubscribeAllService();
         return RestResult.of("同步数据完成");

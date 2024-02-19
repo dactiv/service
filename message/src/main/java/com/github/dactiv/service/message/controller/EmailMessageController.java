@@ -57,7 +57,7 @@ public class EmailMessageController {
      * @return 分页实体
      */
     @PostMapping("page")
-    @PreAuthorize("hasAuthority('perms[email:page]')")
+    @PreAuthorize("hasAuthority('perms[message_email:page]')")
     public Page<EmailMessageEntity> page(PageRequest pageRequest, HttpServletRequest request) {
 
         QueryWrapper<EmailMessageEntity> query = queryGenerator.getQueryWrapperByHttpRequest(request);
@@ -73,7 +73,7 @@ public class EmailMessageController {
      * @return 邮件消息实体
      */
     @GetMapping("get")
-    @PreAuthorize("hasAuthority('perms[email:get]')")
+    @PreAuthorize("hasAuthority('perms[message_email:get]')")
     @Plugin(name = "编辑信息/查看明细")
     public EmailMessageEntity get(@RequestParam Integer id) {
         return emailMessageSender.getEmailMessageService().get(id);
@@ -85,7 +85,7 @@ public class EmailMessageController {
      * @param ids 邮件消息主键 ID 值集合
      */
     @PostMapping("delete")
-    @PreAuthorize("hasAuthority('perms[email:delete]')")
+    @PreAuthorize("hasAuthority('perms[message_email:delete]')")
     @Idempotent(key = "message:email:delete:[#securityContext.authentication.details.id]")
     @Plugin(name = "删除信息", audit = true, operationDataTrace = true)
     public RestResult<?> delete(@RequestParam List<Integer> ids,
@@ -101,7 +101,7 @@ public class EmailMessageController {
      * @return rest 结果集
      */
     @PostMapping("send")
-    @PreAuthorize("hasAuthority('perms[email:send]')")
+    @PreAuthorize("hasAuthority('perms[message_email:send]')")
     @Plugin(name = "发送信息", audit = true, operationDataTrace = true)
     public RestResult<Object> send(@RequestBody EmailMessageBody body,
                                    @CurrentSecurityContext SecurityContext securityContext) {

@@ -1,0 +1,71 @@
+# dactiv:
+#   dmp:
+#     map-icon-path: ./avatar/map
+#     map:
+#       alibaba:
+#         js-key: 高德地图 js 密钥
+#         enable: true
+#         max-size: 3000
+#         cloud-security-metas:
+#           - secret-id: 高德地图 app id
+#             secret-key: 高德地图 app key
+#       tencent:
+#         js-key: 腾讯地图 js 密钥
+#         enable: true
+#         keys:
+#           - 腾讯地图服务 api 密钥 1
+#           - 腾讯地图服务 api 密钥 2
+#           - 腾讯地图服务 api 密钥 3
+#       baidu:
+#         js-key: 百度地图 js 密钥
+#         enable: true
+#         keys:
+#           - 百度地图服务 api 密钥 1
+#           - 百度地图服务 api 密钥 2
+#           - 百度地图服务 api 密钥 3
+
+spring:
+  elasticsearch:
+    uris: http://localhost:9200
+    username:
+    password:
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username:
+    password:
+    virtual-host: /
+    # 开启发送失败返回
+    publisher-returns: true
+    # 开启发送确认
+    publisher-confirm-type: correlated
+    listener:
+      # 开启 ack
+      simple:
+        acknowledge-mode: manual
+        concurrency: 8
+        retry:
+          # 重试初始间隔时间
+          initial-interval: 2000
+          # 间隔时间乘子，间隔时间 * 乘子 = 下一次的间隔时间，最大不能超过设置的最大间隔时间
+          multiplier: 2
+          # 启用重试
+          enabled: true
+      # 开启 ack
+      direct:
+        acknowledge-mode: manual
+        retry:
+          # 重试初始间隔时间
+          initial-interval: 2000
+          # 间隔时间乘子，间隔时间 * 乘子 = 下一次的间隔时间，最大不能超过设置的最大间隔时间
+          multiplier: 2
+          # 启用重试
+          enabled: true
+    # 支持消息的确认与返回
+    template:
+      mandatory: true

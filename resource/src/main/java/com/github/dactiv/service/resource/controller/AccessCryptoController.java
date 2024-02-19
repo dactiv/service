@@ -78,7 +78,7 @@ public class AccessCryptoController {
      * @return 分页实体
      */
     @PostMapping("page")
-    @PreAuthorize("hasAuthority('perms[access_crypto:page]')")
+    @PreAuthorize("hasAuthority('perms[resource_access_crypto:page]')")
     public Page<AccessCryptoEntity> page(PageRequest pageRequest, HttpServletRequest request) {
         return accessCryptoService.findTotalPage(pageRequest, queryGenerator.getQueryWrapperByHttpRequest(request));
     }
@@ -90,7 +90,7 @@ public class AccessCryptoController {
      * @return 访问加解密实体
      */
     @GetMapping("get")
-    @PreAuthorize("hasAuthority('perms[access_crypto:get]')")
+    @PreAuthorize("hasAuthority('perms[resource_access_crypto:get]')")
     @Plugin(name = "编辑信息/查看明细", sources = ResourceSourceEnum.CONSOLE_SOURCE_VALUE)
     public AccessCryptoEntity get(@RequestParam Integer id) {
         return accessCryptoService.get(id);
@@ -113,7 +113,7 @@ public class AccessCryptoController {
      * @param entity 访问加解密实体
      */
     @PostMapping("save")
-    @PreAuthorize("hasAuthority('perms[access_crypto:save]')")
+    @PreAuthorize("hasAuthority('perms[resource_access_crypto:save]')")
     @Plugin(name = "添加或保存信息", audit = true, operationDataTrace = true)
     public RestResult<Integer> save(@RequestBody @Valid AccessCryptoEntity entity) {
         accessCryptoService.save(entity);
@@ -126,7 +126,7 @@ public class AccessCryptoController {
      * @param ids 主键值集合
      */
     @PostMapping("delete")
-    @PreAuthorize("hasAuthority('perms[access_crypto:delete]')")
+    @PreAuthorize("hasAuthority('perms[resource_access_crypto:delete]')")
     @Plugin(name = "删除信息", audit = true, operationDataTrace = true)
     public RestResult<?> delete(@RequestParam List<Integer> ids) {
         accessCryptoService.deleteById(ids);

@@ -50,7 +50,7 @@ public class ConsoleUserController {
      * @return 分页实体
      */
     @PostMapping("page")
-    @PreAuthorize("hasAuthority('perms[console_user:page]')")
+    @PreAuthorize("hasAuthority('perms[authentication_console_user:page]')")
     public Page<ConsoleUserEntity> page(PageRequest pageRequest, HttpServletRequest request) {
 
         QueryWrapper<ConsoleUserEntity> query = queryGenerator.getQueryWrapperByHttpRequest(request);
@@ -82,7 +82,7 @@ public class ConsoleUserController {
      * @return 用户实体
      */
     @GetMapping("get")
-    @PreAuthorize("hasRole('FEIGN') or hasAuthority('perms[console_user:get]')")
+    @PreAuthorize("hasRole('FEIGN') or hasAuthority('perms[authentication_console_user:get]')")
     @Plugin(name = "编辑信息/查看明细")
     public ConsoleUserEntity get(@RequestParam Integer id) {
 
@@ -97,7 +97,7 @@ public class ConsoleUserController {
      */
     @PostMapping("save")
     @Plugin(name = "添加或保存信息", audit = true, operationDataTrace = true)
-    @PreAuthorize("hasAuthority('perms[console_user:save]')")
+    @PreAuthorize("hasAuthority('perms[authentication_console_user:save]')")
     public RestResult<Integer> save(@Valid @RequestBody ConsoleUserEntity entity) {
         consoleUserService.save(entity);
 
@@ -112,7 +112,7 @@ public class ConsoleUserController {
      */
     @PostMapping("delete")
     @Plugin(name = "删除信息", audit = true, operationDataTrace = true)
-    @PreAuthorize("hasAuthority('perms[console_user:delete]')")
+    @PreAuthorize("hasAuthority('perms[authentication_console_user:delete]')")
     public RestResult<?> delete(@RequestParam List<Integer> ids) {
 
         consoleUserService.deleteById(ids, false);

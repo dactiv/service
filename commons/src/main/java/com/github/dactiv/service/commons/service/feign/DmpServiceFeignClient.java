@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.awt.geom.Point2D;
 
 /**
- * 采集服务 feign 客户端
+ * 数据中台服务 feign 客户端
  *
  * @author maurice.chen
  */
-@FeignClient(value = SystemConstants.SYS_GATHER_NAME, configuration = FeignAuthenticationConfiguration.class)
-public interface GatherServiceFeignClient {
+@FeignClient(value = SystemConstants.SYS_DMP_NAME, configuration = FeignAuthenticationConfiguration.class)
+public interface DmpServiceFeignClient {
 
     /**
      * 获取地图区域信息

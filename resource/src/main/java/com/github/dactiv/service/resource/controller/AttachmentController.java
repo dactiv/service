@@ -1,6 +1,7 @@
 package com.github.dactiv.service.resource.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.github.dactiv.framework.captcha.CaptchaProperties;
 import com.github.dactiv.framework.captcha.CaptchaService;
 import com.github.dactiv.framework.captcha.DelegateCaptchaService;
 import com.github.dactiv.framework.commons.Casts;
@@ -14,8 +15,6 @@ import com.github.dactiv.framework.crypto.algorithm.CodecUtils;
 import com.github.dactiv.framework.minio.MinioTemplate;
 import com.github.dactiv.framework.security.enumerate.ResourceType;
 import com.github.dactiv.framework.security.plugin.Plugin;
-import com.github.dactiv.framework.spring.security.authentication.config.CaptchaVerificationProperties;
-import com.github.dactiv.framework.spring.security.authentication.service.DefaultUserDetailsService;
 import com.github.dactiv.framework.spring.security.authentication.token.PrincipalAuthenticationToken;
 import com.github.dactiv.framework.spring.security.entity.SecurityUserDetails;
 import com.github.dactiv.framework.spring.web.mvc.SpringMvcUtils;
@@ -40,6 +39,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.annotation.CurrentSecurityContext;
@@ -119,7 +119,7 @@ public class AttachmentController {
             Item item = result.get();
 
             StatObjectResponse statObjectResponse = attachmentService.getMinioTemplate().statObject(FileObject.of(bucket.getBucketName(), item.objectName()), item.etag());
-            if (isInaccessible(securityUserDetails, statObjectResponse.userMetadata())) {
+            if (attachmentService.isInaccessible(securityUserDetails, statObjectResponse.userMetadata())) {
                 continue;
             }
 
@@ -132,24 +132,6 @@ public class AttachmentController {
         }
 
         return items;
-    }
-
-    public boolean isInaccessible(SecurityUserDetails securityUserDetails, Map<String, String> userMetadata) {
-        if (ResourceSourceEnum.CONSOLE_SOURCE_VALUE.equals(securityUserDetails.getType()) || DefaultUserDetailsService.DEFAULT_TYPES.equals(securityUserDetails.getType())) {
-            return false;
-        }
-
-        String uploaderId = userMetadata.getOrDefault(MinioTemplate.UPLOADER_ID, StringUtils.EMPTY);
-        if (StringUtils.isEmpty(uploaderId)) {
-            return false;
-        }
-
-        String uploaderType = userMetadata.getOrDefault(MinioTemplate.UPLOADER_TYPE, StringUtils.EMPTY);
-        if (StringUtils.isEmpty(uploaderType)) {
-            return false;
-        }
-
-        return !securityUserDetails.getType().equals(uploaderType) || !securityUserDetails.getId().toString().equals(uploaderId);
     }
 
     /**
@@ -191,7 +173,7 @@ public class AttachmentController {
             } else {
 
                 StatObjectResponse statObjectResponse = attachmentService.getMinioTemplate().statObject(object);
-                if (isInaccessible(securityUserDetails, statObjectResponse.userMetadata())) {
+                if (attachmentService.isInaccessible(securityUserDetails, statObjectResponse.userMetadata())) {
                     continue;
                 }
 
@@ -310,8 +292,8 @@ public class AttachmentController {
      */
     @PostMapping("captchaUpload")
     public RestResult<Map<String, Object>> captchaUpload(@RequestParam List<MultipartFile> files, HttpServletRequest request) throws Exception {
-        String captchaType = request.getParameter(CaptchaVerificationProperties.DEFAULT_CAPTCHA_TYPE_PARAM_NAME);
-        Assert.hasText(captchaType, CaptchaVerificationProperties.DEFAULT_CAPTCHA_TYPE_PARAM_NAME + " 参数不能为空");
+        String captchaType = request.getParameter(CaptchaProperties.DEFAULT_CAPTCHA_TYPE_PARAM_NAME);
+        Assert.hasText(captchaType, CaptchaProperties.DEFAULT_CAPTCHA_TYPE_PARAM_NAME + " 参数不能为空");
 
         RestResult<Map<String, Object>> result = delegateCaptchaService.verify(request);
 
@@ -352,7 +334,7 @@ public class AttachmentController {
         SecurityUserDetails securityUserDetails = Casts.cast(securityContext.getAuthentication().getDetails());
         StatObjectResponse statObjectResponse = attachmentService.getMinioTemplate().statObject(fileObject);
 
-        if (isInaccessible(securityUserDetails, statObjectResponse.userMetadata())) {
+        if (attachmentService.isInaccessible(securityUserDetails, statObjectResponse.userMetadata())) {
             throw new InternalAuthenticationServiceException("您没有权限访问此资源");
         }
 
@@ -702,14 +684,23 @@ public class AttachmentController {
     @PostMapping("sendEmail")
     @PreAuthorize("isFullyAuthenticated()")
     public RestResult<?> sendEmail(@CurrentSecurityContext SecurityContext securityContext,
-                                   @RequestBody SendAttachmentEmailRequestBody body) {
+                                   @RequestBody SendAttachmentEmailRequestBody body) throws Exception {
+        SecurityUserDetails securityUserDetails = Casts.cast(securityContext.getAuthentication().getDetails());
+
+        for (FilenameObject filenameObject : body.getFiles()) {
+            StatObjectResponse statObjectResponse = attachmentService.getMinioTemplate().statObject(filenameObject);
+            if (!attachmentService.isInaccessible(securityUserDetails, statObjectResponse.userMetadata())) {
+                throw new AccessDeniedException("当前存在不属于你可操作的文件信息。");
+            }
+        }
+
         List<String> emails = body.getToEmails();
         if (CollectionUtils.isEmpty(emails)) {
             SecurityUserDetails userDetails = Casts.cast(securityContext.getAuthentication().getDetails());
             String email = userDetails.getMeta().getOrDefault(SecurityUserDetailsConstants.EMAIL_KEY, StringUtils.EMPTY).toString();
             emails.add(email);
         }
-        // FIXME 这里有水平越权问题。
+
         attachmentService.sendEmail(emails, body.getFiles());
 
         return RestResult.of("发送文件 " + body.getFiles().stream().map(FilenameObject::getFilename).toList() + " 到 " + emails + " 邮件成功");

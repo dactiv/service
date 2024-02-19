@@ -78,7 +78,7 @@ public class DictionaryController {
      * @return 分页实体
      */
     @PostMapping("dataDictionaryPage")
-    @PreAuthorize("hasAuthority('perms[data_dictionary:page]')")
+    @PreAuthorize("hasAuthority('perms[resource_data_dictionary:page]')")
     public Page<DataDictionaryEntity> dataDictionaryPage(PageRequest pageRequest,
                                                          @RequestParam Integer typeId,
                                                          HttpServletRequest request) {
@@ -108,7 +108,7 @@ public class DictionaryController {
      * @return 数据字典实体
      */
     @GetMapping("getDataDictionary")
-    @PreAuthorize("hasAuthority('perms[data_dictionary:get]')")
+    @PreAuthorize("hasAuthority('perms[resource_data_dictionary:get]')")
     @Plugin(name = "编辑数据字典")
     public DataDictionaryEntity getDataDictionary(@RequestParam Integer id) {
         return dictionaryService.getDataDictionaryService().get(id);
@@ -120,7 +120,7 @@ public class DictionaryController {
      * @param entity 数据字典实体
      */
     @PostMapping("saveDataDictionary")
-    @PreAuthorize("hasAuthority('perms[data_dictionary:save]')")
+    @PreAuthorize("hasAuthority('perms[resource_data_dictionary:save]')")
     @Plugin(name = "添加或保存数据字典", audit = true, operationDataTrace = true)
     public RestResult<Integer> saveDataDictionary(@Valid @RequestBody DataDictionaryEntity entity) {
         dictionaryService.saveDataDictionary(entity);
@@ -133,7 +133,7 @@ public class DictionaryController {
      * @param ids 主键值集合
      */
     @PostMapping("deleteDataDictionary")
-    @PreAuthorize("hasAuthority('perms[data_dictionary:delete]')")
+    @PreAuthorize("hasAuthority('perms[resource_data_dictionary:delete]')")
     @Plugin(name = "删除数据字典实体", audit = true, operationDataTrace = true)
     public RestResult<?> deleteDataDictionary(@RequestParam List<Integer> ids) {
         dictionaryService.deleteDataDictionary(ids);
@@ -150,7 +150,7 @@ public class DictionaryController {
      * @return 字典类型集合
      */
     @PostMapping("findDictionaryType")
-    @PreAuthorize("hasAuthority('perms[dictionary_type:find]')")
+    @PreAuthorize("hasAuthority('perms[resource_dictionary_type:find]')")
     public List<DictionaryTypeEntity> findDictionaryType(HttpServletRequest request,
                                                          @RequestParam(required = false) boolean mergeTree) {
 
@@ -174,7 +174,7 @@ public class DictionaryController {
      */
     @GetMapping("getDictionaryType")
     @Plugin(name = "编辑字典类型")
-    @PreAuthorize("hasAuthority('perms[dictionary_type:get]')")
+    @PreAuthorize("hasAuthority('perms[resource_dictionary_type:get]')")
     public DictionaryTypeEntity getDictionaryType(@RequestParam Integer id) {
         return dictionaryService.getDictionaryTypeService().get(id);
     }
@@ -198,7 +198,7 @@ public class DictionaryController {
      * @param entity 数据字典类型实体
      */
     @PostMapping("saveDictionaryType")
-    @PreAuthorize("hasAuthority('perms[dictionary_type:save]')")
+    @PreAuthorize("hasAuthority('perms[resource_dictionary_type:save]')")
     @Plugin(name = "添加或保存字典类型", audit = true, operationDataTrace = true)
     public RestResult<Integer> saveDictionaryType(@Valid @RequestBody DictionaryTypeEntity entity) {
         dictionaryService.saveDictionaryType(entity);
@@ -212,7 +212,7 @@ public class DictionaryController {
      */
     @PostMapping("deleteDictionaryType")
     @Plugin(name = "删除字典类型", audit = true, operationDataTrace = true)
-    @PreAuthorize("hasAuthority('perms[dictionary_type:delete]')")
+    @PreAuthorize("hasAuthority('perms[resource_dictionary_type:delete]')")
     public RestResult<?> deleteDictionaryType(@RequestParam List<Integer> ids) {
         dictionaryService.deleteDictionaryType(ids);
         return RestResult.of("删除" + ids.size() + "条记录成功");

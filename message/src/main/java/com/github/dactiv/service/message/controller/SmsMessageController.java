@@ -61,7 +61,7 @@ public class SmsMessageController {
      * @return 分页实体
      */
     @PostMapping("page")
-    @PreAuthorize("hasAuthority('perms[sms:page]')")
+    @PreAuthorize("hasAuthority('perms[message_sms:page]')")
     public Page<SmsMessageEntity> page(PageRequest pageRequest, HttpServletRequest request) {
         QueryWrapper<SmsMessageEntity> query = queryGenerator.getQueryWrapperByHttpRequest(request);
         query.orderByDesc(IdEntity.ID_FIELD_NAME);
@@ -75,7 +75,7 @@ public class SmsMessageController {
      * @return 短信消息实体
      */
     @GetMapping("get")
-    @PreAuthorize("hasAuthority('perms[sms:get]')")
+    @PreAuthorize("hasAuthority('perms[message_sms:get]')")
     @Plugin(name = "编辑信息/查看明细")
     public SmsMessageEntity get(@RequestParam Integer id) {
         return smsMessageSender.getSmsMessageService().get(id);
@@ -87,7 +87,7 @@ public class SmsMessageController {
      * @param ids 短信消息主键 ID 值集合
      */
     @PostMapping("delete")
-    @PreAuthorize("hasAuthority('perms[sms:delete]')")
+    @PreAuthorize("hasAuthority('perms[message_sms:delete]')")
     @Plugin(name = "删除信息", audit = true, operationDataTrace = true)
     public RestResult<?> delete(@RequestParam List<Integer> ids) {
         smsMessageSender.getSmsMessageService().deleteById(ids);
@@ -101,13 +101,13 @@ public class SmsMessageController {
      */
     @GetMapping("balance")
     @Plugin(name = "查看短信余额")
-    @PreAuthorize("hasAuthority('perms[sms:balance]')")
+    @PreAuthorize("hasAuthority('perms[message_sms:balance]')")
     public List<SmsBalanceMeta> balance() {
         return smsMessageSender.getSmsChannelSenderList().stream().map(SmsChannelSender::getBalance).collect(Collectors.toList());
     }
 
     @PostMapping("send")
-    @PreAuthorize("hasAuthority('perms[sms:send]')")
+    @PreAuthorize("hasAuthority('perms[message_sms:send]')")
     @Plugin(name = "发送短信", audit = true, operationDataTrace = true)
     public RestResult<Object> send(@RequestBody SmsMessageBody body,
                                    @CurrentSecurityContext SecurityContext securityContext) {

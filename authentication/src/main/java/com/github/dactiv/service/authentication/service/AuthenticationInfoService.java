@@ -86,7 +86,8 @@ public class AuthenticationInfoService {
         }
 
         String userAddress = ipAddressDetails.getIpRegionMeta().getRegionMeta().getShortRegionString();
-        if (StringUtils.equals(userAddress, authenticationInfo.getIpRegionMeta().getRegionMeta().getShortRegionString())) {
+        String lastAuthenticationAddress = authenticationInfo.getIpRegionMeta().getRegionMeta().getShortRegionString();
+        if (StringUtils.equals(userAddress, lastAuthenticationAddress)) {
             return;
         }
 

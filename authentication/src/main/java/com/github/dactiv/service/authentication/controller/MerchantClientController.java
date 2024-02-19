@@ -43,7 +43,7 @@ public class MerchantClientController {
      * @see MerchantClientEntity
      */
     @GetMapping("getByMerchantId")
-    @PreAuthorize("hasAuthority('perms[merchant_client:get_by_merchant_id]')")
+    @PreAuthorize("hasAuthority('perms[authentication_merchant_client:get_by_merchant_id]')")
     public MerchantClientEntity getByMerchantId(@RequestParam Integer id) {
         return merchantClientService.getByMerchantId(id);
     }
@@ -55,7 +55,7 @@ public class MerchantClientController {
      * @see MerchantClientEntity
      */
     @PostMapping("save")
-    @PreAuthorize("hasAuthority('perms[merchant_client:save]')")
+    @PreAuthorize("hasAuthority('perms[authentication_merchant_client:save]')")
     @Plugin(name = "保存或添加信息", audit = true, operationDataTrace = true)
     public RestResult<Integer> save(@Valid @RequestBody MerchantClientEntity entity) {
         merchantClientService.save(entity);

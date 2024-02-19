@@ -29,13 +29,13 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * json 形式的认证失败具柄实现
+ * 认证失败的一些处理实现
  *
  * @author maurice.chen
  */
 @Component
 @RequiredArgsConstructor
-public class CaptchaAuthenticationFailureResponse implements JsonAuthenticationFailureResponse {
+public class AuthenticationFailureResponse implements JsonAuthenticationFailureResponse {
 
     public static final String ALLOWABLE_FAILURE_NUMBER_NAME = "failureNumber";
 
@@ -129,7 +129,7 @@ public class CaptchaAuthenticationFailureResponse implements JsonAuthenticationF
         }
 
         IdValueMeta<String, Map<String, Object>> meta = getAllowableFailureMeta(request);
-        Integer number = Casts.cast(meta.getValue().getOrDefault(CaptchaAuthenticationFailureResponse.ALLOWABLE_FAILURE_NUMBER_NAME, 0));
+        Integer number = Casts.cast(meta.getValue().getOrDefault(AuthenticationFailureResponse.ALLOWABLE_FAILURE_NUMBER_NAME, 0));
 
         return number >= applicationConfig.getAllowableFailureNumber();
     }

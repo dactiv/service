@@ -1,0 +1,80 @@
+{
+  "dynamic": false,
+  "properties": {
+    "id": {
+      "type": "keyword"
+    },
+    "creationTime": {
+      "type": "date",
+      "format": "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||yyyy-MM-dd'T'HH:mm:ss.SSSZZ||epoch_millis"
+    },
+    "userId": {
+      "type": "integer"
+    },
+    "username": {
+      "type": "keyword"
+    },
+    "userType": {
+      "type": "keyword"
+    },
+    "meta": {
+      "dynamic":true,
+      "type": "object"
+    },
+    "ipRegionMeta": {
+      "type": "object",
+      "properties": {
+        "location": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "double"
+            },
+            "y": {
+              "type": "double"
+            }
+          }
+        },
+        "ipAddress": {
+          "type": "keyword"
+        },
+        "regionMeta": {
+          "type": "object",
+          "properties": {
+            "province": {
+              "type": "keyword"
+            },
+            "city": {
+              "type": "keyword"
+            },
+            "district": {
+              "type": "keyword"
+            },
+            "country": {
+              "type": "keyword"
+            },
+            "adCode": {
+              "type": "keyword"
+            },
+            "countryCode": {
+              "type": "keyword"
+            },
+            "regionString": {
+              "type": "keyword"
+            },
+            "shortRegionString": {
+              "type": "keyword"
+            }
+          }
+        }
+      }
+    },
+    "device": {
+      "dynamic":true,
+      "type": "object"
+    },
+    "remark": {
+      "type": "text"
+    }
+  }
+}

@@ -199,32 +199,31 @@ public class AuthorizationService {
 
         for (SimpleAuthenticationToken token : tokens) {
             String key = springSecurityProperties.getAuthorizationCache().getName(token.getName());
-
-            redissonClient.getKeys().getKeysByPattern(key).forEach(k -> {
-                redissonClient.getBucket(k).deleteAsync();
-                String identity = StringUtils.substringAfterLast(k, CacheProperties.DEFAULT_SEPARATOR);
-
-                Optional<SystemUserResolver> optional = systemUserResolvers
-                        .stream()
-                        .filter(s -> s.isSupport(token.getType()))
-                        .findFirst();
-                if (optional.isEmpty()) {
-                    return;
-                }
-
-                SystemUserResolver resolver = optional.get();
-                SystemUserEntity entity = resolver.getByIdentity(identity);
-                if (Objects.isNull(entity)) {
-                    return;
-                }
-
-                ResourceSourceEnum source = ResourceSourceEnum.parse(token.getType());
-                expireSystemUserSession(entity, source);
-            });
-
-
+            redissonClient.getKeys().getKeysByPattern(key).forEach(k -> this.deleteAuthorizationCache(k, token));
         }
 
+    }
+
+    private void deleteAuthorizationCache(String key, SimpleAuthenticationToken token) {
+        redissonClient.getBucket(key).deleteAsync();
+        String identity = StringUtils.substringAfterLast(key, CacheProperties.DEFAULT_SEPARATOR);
+
+        Optional<SystemUserResolver> optional = systemUserResolvers
+                .stream()
+                .filter(s -> s.isSupport(token.getType()))
+                .findFirst();
+        if (optional.isEmpty()) {
+            return;
+        }
+
+        SystemUserResolver resolver = optional.get();
+        SystemUserEntity entity = resolver.getByIdentity(identity);
+        if (Objects.isNull(entity)) {
+            return;
+        }
+
+        ResourceSourceEnum source = ResourceSourceEnum.parse(token.getType());
+        expireSystemUserSession(entity, source);
     }
 
     /**

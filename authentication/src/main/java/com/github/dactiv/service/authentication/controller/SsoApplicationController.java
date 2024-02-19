@@ -50,7 +50,7 @@ public class SsoApplicationController {
 
     @PostMapping("find")
     @Plugin(name = "查找单点登陆应用")
-    @PreAuthorize("hasAuthority('perms[sso_application:find]')")
+    @PreAuthorize("hasAuthority('perms[authentication_sso_application:find]')")
     public List<SsoApplicationEntity> find(HttpServletRequest request) {
         QueryWrapper<SsoApplicationEntity> query = queryGenerator.getQueryWrapperByHttpRequest(request);
         query.orderByDesc(IdEntity.ID_FIELD_NAME);
@@ -66,7 +66,7 @@ public class SsoApplicationController {
      * @see SsoApplicationEntity
      */
     @PostMapping("page")
-    @PreAuthorize("hasAuthority('perms[sso_application:page]')")
+    @PreAuthorize("hasAuthority('perms[authentication_sso_application:page]')")
     public Page<SsoApplicationEntity> page(PageRequest pageRequest,
                                            @RequestParam String merchantClientId,
                                            HttpServletRequest request) {
@@ -86,7 +86,7 @@ public class SsoApplicationController {
      * @see SsoApplicationEntity
      */
     @GetMapping("get")
-    @PreAuthorize("hasAuthority('perms[sso_application:get]')")
+    @PreAuthorize("hasAuthority('perms[authentication_sso_application:get]')")
     @Plugin(name = "编辑信息")
     public SsoApplicationEntity get(@RequestParam Integer id) {
         return merchantClientService.getSsoApplication(id);
@@ -99,7 +99,7 @@ public class SsoApplicationController {
      * @see SsoApplicationEntity
      */
     @PostMapping("save")
-    @PreAuthorize("hasAuthority('perms[sso_application:save]')")
+    @PreAuthorize("hasAuthority('perms[authentication_sso_application:save]')")
     @Plugin(name = "保存或添加信息", audit = true, operationDataTrace = true)
     public RestResult<Integer> save(@Valid @RequestBody SsoApplicationEntity entity) {
         merchantClientService.saveSsoApplication(entity);
@@ -113,7 +113,7 @@ public class SsoApplicationController {
      * @see SsoApplicationEntity
      */
     @PostMapping("delete")
-    @PreAuthorize("hasAuthority('perms[sso_application:delete]')")
+    @PreAuthorize("hasAuthority('perms[authentication_sso_application:delete]')")
     @Plugin(name = "删除信息", audit = true, operationDataTrace = true)
     public RestResult<?> delete(@RequestParam List<Integer> ids) {
         merchantClientService.deleteSsoApplication(ids);

@@ -10,11 +10,14 @@ import com.github.dactiv.framework.commons.minio.Bucket;
 import com.github.dactiv.framework.commons.minio.FileObject;
 import com.github.dactiv.framework.commons.minio.FilenameObject;
 import com.github.dactiv.framework.minio.MinioTemplate;
+import com.github.dactiv.framework.spring.security.authentication.service.DefaultUserDetailsService;
+import com.github.dactiv.framework.spring.security.entity.SecurityUserDetails;
 import com.github.dactiv.service.commons.service.SystemConstants;
 import com.github.dactiv.service.commons.service.domain.meta.IdValueMeta;
 import com.github.dactiv.service.commons.service.domain.meta.TypeIdNameMeta;
 import com.github.dactiv.service.commons.service.enumerate.AttachmentTypeEnum;
 import com.github.dactiv.service.commons.service.enumerate.MessageTypeEnum;
+import com.github.dactiv.service.commons.service.enumerate.ResourceSourceEnum;
 import com.github.dactiv.service.commons.service.feign.MessageServiceFeignClient;
 import com.github.dactiv.service.resource.config.AttachmentConfig;
 import com.github.dactiv.service.resource.domain.entity.dictionary.DataDictionaryEntity;
@@ -222,6 +225,24 @@ public class AttachmentService implements InitializingBean {
         }
 
         minioTemplate.makeBucketIfNotExists(SystemConstants.EXPORT_BUCKET);
+    }
+
+    public boolean isInaccessible(SecurityUserDetails securityUserDetails, Map<String, String> userMetadata) {
+        if (ResourceSourceEnum.CONSOLE_SOURCE_VALUE.equals(securityUserDetails.getType()) || DefaultUserDetailsService.DEFAULT_TYPES.equals(securityUserDetails.getType())) {
+            return false;
+        }
+
+        String uploaderId = userMetadata.getOrDefault(MinioTemplate.UPLOADER_ID, StringUtils.EMPTY);
+        if (StringUtils.isEmpty(uploaderId)) {
+            return false;
+        }
+
+        String uploaderType = userMetadata.getOrDefault(MinioTemplate.UPLOADER_TYPE, StringUtils.EMPTY);
+        if (StringUtils.isEmpty(uploaderType)) {
+            return false;
+        }
+
+        return !securityUserDetails.getType().equals(uploaderType) || !securityUserDetails.getId().toString().equals(uploaderId);
     }
 
     public void sendEmail(List<String> email, List<FilenameObject> files) {

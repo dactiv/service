@@ -67,7 +67,7 @@ public class JsonLogoutSuccessHandler implements LogoutSuccessHandler {
 
     private final NacosDiscoveryProperties nacosDiscoveryProperties;
 
-    private final CaptchaAuthenticationFailureResponse failureHandler;
+    private final AuthenticationFailureResponse failureHandler;
 
     private final AuthorizationService authorizationService;
 
@@ -188,7 +188,7 @@ public class JsonLogoutSuccessHandler implements LogoutSuccessHandler {
     private void postCaptchaData(RestResult<Map<String, Object>> result, HttpServletRequest request) {
 
         IdValueMeta<String, Map<String, Object>> meta = failureHandler.getAllowableFailureMeta(request);
-        Integer number = Casts.cast(meta.getValue().getOrDefault(CaptchaAuthenticationFailureResponse.ALLOWABLE_FAILURE_NUMBER_NAME, 0));
+        Integer number = Casts.cast(meta.getValue().getOrDefault(AuthenticationFailureResponse.ALLOWABLE_FAILURE_NUMBER_NAME, 0));
 
         Integer allowableFailureNumber = applicationConfig.getAllowableFailureNumber();
 

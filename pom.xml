@@ -105,6 +105,7 @@
         <module>gateway</module>
         <module>resource</module>
         <module>message</module>
+        <module>dmp</module>
     </modules>
 
 </project>

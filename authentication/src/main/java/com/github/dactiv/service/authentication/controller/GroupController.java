@@ -45,7 +45,7 @@ public class GroupController {
      * 获取所有用户组
      */
     @PostMapping("find")
-    @PreAuthorize("hasAuthority('perms[group:find]')")
+    @PreAuthorize("hasAuthority('perms[authentication_group:find]')")
     public List<GroupEntity> find(HttpServletRequest request, @RequestParam(required = false) boolean mergeTree) {
         QueryWrapper<GroupEntity> query = queryGenerator.getQueryWrapperByHttpRequest(request);
         query.orderByDesc(IdEntity.ID_FIELD_NAME);
@@ -65,7 +65,7 @@ public class GroupController {
      * @return 用户组实体
      */
     @GetMapping("get")
-    @PreAuthorize("hasAuthority('perms[group:get]')")
+    @PreAuthorize("hasAuthority('perms[authentication_group:get]')")
     @Plugin(name = "编辑信息/查看明细")
     public GroupEntity get(@RequestParam Integer id) {
         return groupService.get(id);
@@ -78,7 +78,7 @@ public class GroupController {
      * @return 消息结果集
      */
     @PostMapping("save")
-    @PreAuthorize("hasAuthority('perms[group:save]')")
+    @PreAuthorize("hasAuthority('perms[authentication_group:save]')")
     @Plugin(name = "添加或保存信息", audit = true, operationDataTrace = true)
     public RestResult<Integer> save(@Valid @RequestBody GroupEntity entity) {
 
@@ -94,7 +94,7 @@ public class GroupController {
      * @return 消息结果集
      */
     @PostMapping("delete")
-    @PreAuthorize("hasAuthority('perms[group:delete]')")
+    @PreAuthorize("hasAuthority('perms[authentication_group:delete]')")
     @Plugin(name = "删除信息", audit = true, operationDataTrace = true)
     public RestResult<?> delete(@RequestParam List<Integer> ids) {
 

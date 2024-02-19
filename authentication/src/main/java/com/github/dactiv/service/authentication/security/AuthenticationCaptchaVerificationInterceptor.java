@@ -2,7 +2,7 @@ package com.github.dactiv.service.authentication.security;
 
 import com.github.dactiv.framework.captcha.filter.CaptchaVerificationInterceptor;
 import com.github.dactiv.framework.commons.RestResult;
-import com.github.dactiv.service.authentication.security.handler.CaptchaAuthenticationFailureResponse;
+import com.github.dactiv.service.authentication.security.handler.AuthenticationFailureResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpMethod;
@@ -24,11 +24,11 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class AuthenticationCaptchaVerificationInterceptor implements CaptchaVerificationInterceptor {
 
-    private final CaptchaAuthenticationFailureResponse captchaAuthenticationFailureResponse;
+    private final AuthenticationFailureResponse authenticationFailureResponse;
 
     @Override
     public boolean preVerify(HttpServletRequest request) {
-        String url = captchaAuthenticationFailureResponse.getSpringSecurityProperties().getLoginProcessingUrl();
+        String url = authenticationFailureResponse.getSpringSecurityProperties().getLoginProcessingUrl();
         AntPathRequestMatcher antPathRequestMatcher = new AntPathRequestMatcher(url);
         if (!antPathRequestMatcher.matches(request)) {
             return false;
@@ -38,16 +38,16 @@ public class AuthenticationCaptchaVerificationInterceptor implements CaptchaVeri
             return true;
         }
 
-        return !captchaAuthenticationFailureResponse.isCaptchaAuthentication(request);
+        return !authenticationFailureResponse.isCaptchaAuthentication(request);
     }
 
     @Override
     public void exceptionVerify(HttpServletRequest request, RestResult<Map<String, Object>> result, Exception e) {
-        String url = captchaAuthenticationFailureResponse.getSpringSecurityProperties().getLoginProcessingUrl();
+        String url = authenticationFailureResponse.getSpringSecurityProperties().getLoginProcessingUrl();
         AntPathRequestMatcher antPathRequestMatcher = new AntPathRequestMatcher(url);
         if (!antPathRequestMatcher.matches(request)) {
             return;
         }
-        captchaAuthenticationFailureResponse.setting(result, request, new BadCredentialsException(e.getMessage()));
+        authenticationFailureResponse.setting(result, request, new BadCredentialsException(e.getMessage()));
     }
 }

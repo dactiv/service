@@ -71,7 +71,7 @@ public class MerchantController {
      * @see MerchantEntity
      */
     @PostMapping("page")
-    @PreAuthorize("hasAuthority('perms[merchant:page]')")
+    @PreAuthorize("hasAuthority('perms[resource_merchant:page]')")
     public Page<MerchantEntity> page(PageRequest pageRequest, HttpServletRequest request) {
         QueryWrapper<MerchantEntity> query = queryGenerator.getQueryWrapperByHttpRequest(request);
         query.orderByDesc(IdEntity.ID_FIELD_NAME);
@@ -87,7 +87,7 @@ public class MerchantController {
      */
     @GetMapping("get")
     @Plugin(name = "编辑信息")
-    @PreAuthorize("hasAuthority('perms[merchant:get]') or hasRole('FEIGN')")
+    @PreAuthorize("hasAuthority('perms[resource_merchant:get]') or hasRole('FEIGN')")
     public MerchantEntity get(@RequestParam Integer id) {
         return merchantService.get(id);
     }
@@ -99,7 +99,7 @@ public class MerchantController {
      * @see MerchantEntity
      */
     @PostMapping("save")
-    @PreAuthorize("hasAuthority('perms[merchant:save]')")
+    @PreAuthorize("hasAuthority('perms[resource_merchant:save]')")
     @Plugin(name = "保存或添加信息", audit = true, operationDataTrace = true)
     public RestResult<Integer> save(@Valid @RequestBody MerchantEntity entity) {
         merchantService.save(entity);
@@ -113,7 +113,7 @@ public class MerchantController {
      * @see MerchantEntity
      */
     @PostMapping("delete")
-    @PreAuthorize("hasAuthority('perms[merchant:delete]')")
+    @PreAuthorize("hasAuthority('perms[resource_merchant:delete]')")
     @Plugin(name = "删除信息", audit = true, operationDataTrace = true)
     public RestResult<?> delete(@RequestParam List<Integer> ids) {
         merchantService.deleteById(ids);

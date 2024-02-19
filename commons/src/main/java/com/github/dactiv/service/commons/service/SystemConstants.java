@@ -4,9 +4,7 @@ import com.github.dactiv.framework.commons.CacheProperties;
 import com.github.dactiv.framework.commons.Casts;
 import com.github.dactiv.framework.commons.TimeProperties;
 import com.github.dactiv.framework.commons.minio.Bucket;
-import org.springframework.core.ParameterizedTypeReference;
 
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -32,9 +30,9 @@ public interface SystemConstants {
     String SYS_AUTHENTICATION_NAME = "authentication";
 
     /**
-     * 数据采集系统名称
+     * 数据中台系统名称
      */
-    String SYS_GATHER_NAME = "gather";
+    String SYS_DMP_NAME = "dmp";
 
     /**
      * 网关服务名称
@@ -67,9 +65,9 @@ public interface SystemConstants {
     String MESSAGE_RABBIT_EXCHANGE = RABBIT_EXCHANGE_NAME + Casts.UNDERSCORE + SYS_MESSAGE_NAME;
 
     /**
-     * 采集服务 rabbit mq topic
+     * 数据中台服务 rabbit mq topic
      */
-    String GATHER_RABBIT_EXCHANGE = RABBIT_EXCHANGE_NAME + Casts.UNDERSCORE + SYS_GATHER_NAME;
+    String DMP_RABBIT_EXCHANGE = RABBIT_EXCHANGE_NAME + Casts.UNDERSCORE + SYS_DMP_NAME;
 
     /**
      * 第三方商户数据变更队列名称
@@ -103,14 +101,13 @@ public interface SystemConstants {
 
     String APP_KEY_FIELD_NAME = "appKey";
 
-    String MASTER_DATA_ID = "masterDataId";
+    String STATUS_TABLE_FLED_NAME = "status";
 
     String TOKEN_FIELD_NAME = "token";
 
     String EXECUTE_STATUS_TABLE_FIELD_NAME = "execute_status";
 
-    ParameterizedTypeReference<Map<String, Object>> MAP_REFERENCE = new ParameterizedTypeReference<>() {
-    };
+    String ELASTICSEARCH_SYNC_QUEUE_NAME = DMP_RABBIT_EXCHANGE + "_elasticsearch_sync";
 
     /**
      * 导出的桶信息
@@ -127,27 +124,4 @@ public interface SystemConstants {
      */
     CacheProperties USER_EXPORT_CACHE = CacheProperties.of("dactiv:service:resources:user:export:", TimeProperties.of(7, TimeUnit.DAYS));
 
-    /**
-     * @deprecated 旧系统兼容，等待各个厂商升级后删除该字段
-     */
-    @Deprecated
-    String TOKEN_NAME = "accessKey";
-
-    /**
-     * @deprecated 旧系统兼容，等待各个厂商升级后删除该字段
-     */
-    @Deprecated
-    String APP_KEY = "appKey";
-
-    /**
-     * @deprecated 旧系统兼容，等待各个厂商升级后删除该字段
-     */
-    @Deprecated
-    String STATE_NAME = "state";
-
-    /**
-     * @deprecated 旧系统兼容，等待各个厂商升级后删除该字段
-     */
-    @Deprecated
-    String SIGN_NAME = "sign";
 }

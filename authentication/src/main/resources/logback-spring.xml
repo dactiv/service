@@ -2,8 +2,7 @@
 <configuration>
 
     <springProperty scope="context" name="logName" source="spring.application.name" defaultValue="localhost"/>
-    <springProperty scope="context" name="path" source="spring.application.logging.path"
-                    defaultValue="${user.home}/mdm-server"/>
+    <springProperty scope="context" name="path" source="spring.application.logging.path" defaultValue="${user.home}/dactiv"/>
 
     <!-- 控制台日志输出设置 -->
     <appender name="CONSOLE-APPENDER" class="ch.qos.logback.core.ConsoleAppender">

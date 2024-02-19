@@ -6,7 +6,7 @@ import com.github.dactiv.service.authentication.domain.entity.AuthenticationInfo
 import com.github.dactiv.service.authentication.service.AuthenticationInfoService;
 import com.github.dactiv.service.commons.service.SystemConstants;
 import com.github.dactiv.service.commons.service.domain.meta.AddressRegionMeta;
-import com.github.dactiv.service.commons.service.feign.GatherServiceFeignClient;
+import com.github.dactiv.service.commons.service.feign.DmpServiceFeignClient;
 import com.rabbitmq.client.Channel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +37,7 @@ public class ValidAuthenticationInfoConsumer {
 
     private final AbnormalAreaConfig abnormalAreaConfig;
 
-    private final GatherServiceFeignClient gatherServiceFeignClient;
+    private final DmpServiceFeignClient dmpServiceFeignClient;
 
     @RabbitListener(
             bindings = @QueueBinding(
@@ -54,7 +54,7 @@ public class ValidAuthenticationInfoConsumer {
             AuthenticationInfoEntity info = Casts.readValue(data, AuthenticationInfoEntity.class);
 
             if (Objects.nonNull(info.getIpRegionMeta()) && Objects.nonNull(info.getIpRegionMeta().getLocation())) {
-                AddressRegionMeta addressRegionMeta = gatherServiceFeignClient.getMapRegion(
+                AddressRegionMeta addressRegionMeta = dmpServiceFeignClient.getMapRegion(
                         info.getIpRegionMeta().getLocation(),
                         abnormalAreaConfig.getLocationMapType()
                 );

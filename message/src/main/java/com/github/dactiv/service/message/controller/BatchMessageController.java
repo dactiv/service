@@ -54,7 +54,7 @@ public class BatchMessageController {
      * @see BatchMessageEntity
      */
     @PostMapping("page")
-    @PreAuthorize("hasAuthority('perms[batch_message:page]')")
+    @PreAuthorize("hasAuthority('perms[message_batch:page]')")
     public Page<BatchMessageEntity> page(PageRequest pageRequest, HttpServletRequest request) {
         QueryWrapper<BatchMessageEntity> query = queryGenerator.getQueryWrapperByHttpRequest(request);
         query.orderByDesc(IdEntity.ID_FIELD_NAME);
@@ -70,7 +70,7 @@ public class BatchMessageController {
      */
     @GetMapping("get")
     @Plugin(name = "编辑信息/查看明细")
-    @PreAuthorize("hasAuthority('perms[batch_message:get]')")
+    @PreAuthorize("hasAuthority('perms[message_batch:get]')")
     public BatchMessageEntity get(@RequestParam("id") Integer id) {
         return batchMessageService.get(id);
     }
@@ -83,7 +83,7 @@ public class BatchMessageController {
      */
     @PostMapping("delete")
     @Plugin(name = "删除信息", audit = true, operationDataTrace = true)
-    @PreAuthorize("hasAuthority('perms[batch_message:delete]')")
+    @PreAuthorize("hasAuthority('perms[message_batch:delete]')")
     public RestResult<?> delete(@RequestParam List<Integer> ids) {
         batchMessageService.deleteById(ids);
         return RestResult.of("删除" + ids.size() + "条记录成功");
