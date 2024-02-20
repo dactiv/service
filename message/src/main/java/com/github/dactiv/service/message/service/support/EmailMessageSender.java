@@ -57,7 +57,7 @@ public class EmailMessageSender extends BatchMessageSender<EmailMessageBody, Ema
     /**
      * 数据变更队列名称
      */
-    public static final String DEFAULT_QUEUE_NAME = SystemConstants.MESSAGE_RABBIT_EXCHANGE + Casts.UNDERSCORE + "email_send";
+    public static final String DEFAULT_QUEUE_NAME = SystemConstants.MESSAGE_RABBIT_EXCHANGE + "_email_send";
 
     public static final String BATCH_UPDATE_CONCURRENT_KEY = "dactiv:service:message:email:batch-update:";
 

@@ -29,10 +29,7 @@ import org.springframework.util.AntPathMatcher;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * es 同步数据消费者
@@ -67,8 +64,10 @@ public class ElasticsearchSyncConsumer {
 
         ElasticsearchSyncMeta meta = Casts.readValue(data, ElasticsearchSyncMeta.class);
 
-        if (log.isDebugEnabled()) {
-            log.debug("开始同步:" + meta + "到 es");
+        if (Objects.isNull(meta.getObject())) {
+            log.warn("开始同步:" + meta + "到 es 时，发现 object 内容为空，不做同步操作。");
+            channel.basicNack(tag, false, false);
+            return ;
         }
 
         IndexCoordinates indexCoordinates = IndexCoordinates.of(meta.getIndexName());

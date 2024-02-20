@@ -12,7 +12,6 @@ import com.github.dactiv.service.authentication.consumer.ValidAuthenticationInfo
 import com.github.dactiv.service.authentication.domain.entity.AuthenticationInfoEntity;
 import com.github.dactiv.service.commons.service.SecurityUserDetailsConstants;
 import com.github.dactiv.service.commons.service.SystemConstants;
-import com.github.dactiv.service.commons.service.domain.meta.ElasticsearchSyncMeta;
 import com.github.dactiv.service.commons.service.domain.meta.IpRegionMeta;
 import com.github.dactiv.service.commons.service.domain.meta.LocationIpRegionMeta;
 import jakarta.servlet.http.HttpServletRequest;
@@ -71,16 +70,6 @@ public class AuthenticationSuccessResponse implements JsonAuthenticationSuccessR
                 SystemConstants.AUTHENTICATION_RABBIT_EXCHANGE,
                 ValidAuthenticationInfoConsumer.DEFAULT_QUEUE_NAME,
                 Casts.writeValueAsString(info)
-        );
-
-        ElasticsearchSyncMeta meta = new ElasticsearchSyncMeta();
-        meta.setObject(Casts.convertValue(meta, Casts.MAP_TYPE_REFERENCE));
-        meta.setIndexName(AuthenticationInfoEntity.ELASTICSEARCH_INDEX_NAME);
-
-        amqpTemplate.convertAndSend(
-                SystemConstants.DMP_RABBIT_EXCHANGE,
-                SystemConstants.ELASTICSEARCH_SYNC_QUEUE_NAME,
-                Casts.writeValueAsString(meta)
         );
 
         postSecurityUserDetails(userDetails);

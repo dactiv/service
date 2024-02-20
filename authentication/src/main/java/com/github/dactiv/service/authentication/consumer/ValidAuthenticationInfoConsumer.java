@@ -6,10 +6,12 @@ import com.github.dactiv.service.authentication.domain.entity.AuthenticationInfo
 import com.github.dactiv.service.authentication.service.AuthenticationInfoService;
 import com.github.dactiv.service.commons.service.SystemConstants;
 import com.github.dactiv.service.commons.service.domain.meta.AddressRegionMeta;
+import com.github.dactiv.service.commons.service.domain.meta.ElasticsearchSyncMeta;
 import com.github.dactiv.service.commons.service.feign.DmpServiceFeignClient;
 import com.rabbitmq.client.Channel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.rabbit.annotation.Exchange;
 import org.springframework.amqp.rabbit.annotation.Queue;
 import org.springframework.amqp.rabbit.annotation.QueueBinding;
@@ -31,13 +33,15 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class ValidAuthenticationInfoConsumer {
 
-    public static final String DEFAULT_QUEUE_NAME = SystemConstants.AUTHENTICATION_RABBIT_EXCHANGE + Casts.UNDERSCORE + "valid_info";
+    public static final String DEFAULT_QUEUE_NAME = SystemConstants.AUTHENTICATION_RABBIT_EXCHANGE + "_valid_info";
 
     private final AuthenticationInfoService authenticationInfoService;
 
     private final AbnormalAreaConfig abnormalAreaConfig;
 
     private final DmpServiceFeignClient dmpServiceFeignClient;
+
+    private final AmqpTemplate amqpTemplate;
 
     @RabbitListener(
             bindings = @QueueBinding(
@@ -62,6 +66,16 @@ public class ValidAuthenticationInfoConsumer {
             }
 
             authenticationInfoService.validAuthenticationInfo(info);
+
+            ElasticsearchSyncMeta meta = new ElasticsearchSyncMeta();
+            meta.setObject(Casts.convertValue(info, Casts.MAP_TYPE_REFERENCE));
+            meta.setIndexName(AuthenticationInfoEntity.ELASTICSEARCH_INDEX_NAME);
+
+            amqpTemplate.convertAndSend(
+                    SystemConstants.DMP_RABBIT_EXCHANGE,
+                    SystemConstants.ELASTICSEARCH_SYNC_QUEUE_NAME,
+                    Casts.writeValueAsString(meta)
+            );
 
             channel.basicAck(tag, false);
         } catch (Exception e) {

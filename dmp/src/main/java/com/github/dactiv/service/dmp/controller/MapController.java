@@ -5,7 +5,6 @@ import com.github.dactiv.framework.commons.RestResult;
 import com.github.dactiv.framework.commons.enumerate.ValueEnumUtils;
 import com.github.dactiv.framework.commons.page.Page;
 import com.github.dactiv.framework.commons.page.PageRequest;
-import com.github.dactiv.framework.security.plugin.Plugin;
 import com.github.dactiv.framework.spring.security.entity.SecurityUserDetails;
 import com.github.dactiv.service.dmp.domain.meta.MapConfigPrepareMeta;
 import com.github.dactiv.service.dmp.domain.meta.MapDataMeta;
@@ -51,7 +50,6 @@ public class MapController {
      *
      * @return 对应的地图数据
      */
-    @Plugin(name = "高德地图客源采集")
     @PostMapping("alibabaMapSearch")
     @PreAuthorize("hasAuthority('perms[map:alibaba_map_search]')")
     public Page<MapDataMeta> aliBabaMapSearch(PageRequest pageRequest,
@@ -93,7 +91,6 @@ public class MapController {
      *
      * @return 对应的地图数据
      */
-    @Plugin(name = "腾讯地图客源采集")
     @PostMapping("tencentMapSearch")
     @PreAuthorize("hasAuthority('perms[map:tencent_map_search]')")
     public Page<MapDataMeta> tencentMapSearch(PageRequest pageRequest,
@@ -121,7 +118,6 @@ public class MapController {
      *
      * @return 对应的地图数据
      */
-    @Plugin(name = "百度地图客源采集")
     @PostMapping("baiduMapSearch")
     @PreAuthorize("hasAuthority('perms[map:baidu_map_search]')")
     public Page<MapDataMeta> baiduMapSearch(PageRequest pageRequest,
@@ -166,7 +162,6 @@ public class MapController {
      *
      * @return 当前地图采集数据集合
      */
-    @Plugin(name = "获取当前地图采集数据")
     @GetMapping("getCurrentMapGatherData")
     @PreAuthorize("hasAnyAuthority('perms[dmp_map:get_current_map_gather_data]')")
     public Map<String, List<MapDataMeta>> getCurrentMapGatherData(@RequestParam String searchId,

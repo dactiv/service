@@ -45,7 +45,7 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor(onConstructor_ = @Lazy)
 public class SmsMessageSender extends BatchMessageSender<SmsMessageBody, SmsMessageEntity> {
 
-    public static final String DEFAULT_QUEUE_NAME = SystemConstants.MESSAGE_RABBIT_EXCHANGE + Casts.UNDERSCORE + "sms_send";
+    public static final String DEFAULT_QUEUE_NAME = SystemConstants.MESSAGE_RABBIT_EXCHANGE + "_sms_send";
 
     public static final String BATCH_UPDATE_CONCURRENT_KEY = "dactiv:service:message:sms:batch-update:";
 
