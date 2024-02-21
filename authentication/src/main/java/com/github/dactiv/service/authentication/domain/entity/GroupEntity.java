@@ -10,6 +10,7 @@ import com.github.dactiv.framework.commons.tree.Tree;
 import com.github.dactiv.framework.mybatis.handler.JacksonJsonTypeHandler;
 import com.github.dactiv.framework.mybatis.plus.baisc.support.IntegerVersionEntity;
 import com.github.dactiv.framework.security.plugin.Plugin;
+import com.github.dactiv.framework.spring.web.result.filter.annotation.Exclude;
 import com.github.dactiv.service.commons.service.enumerate.ResourceSourceEnum;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -89,6 +90,7 @@ public class GroupEntity extends IntegerVersionEntity<Integer> implements Tree<I
     /**
      * 资源 id 集合
      */
+    @Exclude("group.controller.find")
     @TableField(typeHandler = JacksonJsonTypeHandler.class)
     private Map<String, List<String>> resourceMap = new LinkedHashMap<>();
 

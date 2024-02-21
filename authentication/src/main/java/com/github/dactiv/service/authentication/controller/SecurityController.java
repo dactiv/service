@@ -24,13 +24,12 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
-import org.springframework.stereotype.Controller;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -40,7 +39,7 @@ import java.util.stream.Collectors;
  *
  * @author maurice.chen
  */
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class SecurityController {
 
@@ -60,7 +59,6 @@ public class SecurityController {
      * @param request http servlet request
      * @return rest 结果集
      */
-    @ResponseBody
     @GetMapping("prepare")
     public RestResult<Map<String, Object>> prepare(HttpServletRequest request) {
         return jsonLogoutSuccessHandler.createUnauthorizedResult(request);
@@ -71,7 +69,6 @@ public class SecurityController {
      *
      * @return 未授权访问结果
      */
-    @ResponseBody
     @GetMapping("login")
     public RestResult<Map<String, Object>> login(HttpServletRequest request) {
         return jsonLogoutSuccessHandler.createUnauthorizedResult(request);
@@ -83,7 +80,6 @@ public class SecurityController {
      * @param securityContext 安全上下文
      * @return 当前用户
      */
-    @ResponseBody
     @GetMapping("getPrincipal")
     @PreAuthorize("isAuthenticated()")
     public SecurityUserDetails getPrincipal(@CurrentSecurityContext SecurityContext securityContext) {
@@ -101,7 +97,16 @@ public class SecurityController {
         return returnValue;
     }
 
-    @ResponseBody
+    /**
+     * oauth 2 用户确认授权响应数据
+     *
+     * @param securityContext 当前用户
+     * @param clientId 商户 id
+     * @param scope 授权作用域
+     * @param state 授权码
+     *
+     * @return 需勾选确认的授权作用域信息
+     */
     @GetMapping(value = "/oauth2/consent")
     public Map<String, Object> consent(@CurrentSecurityContext SecurityContext securityContext,
                                        @RequestParam(OAuth2ParameterNames.CLIENT_ID) String clientId,
@@ -172,13 +177,11 @@ public class SecurityController {
     @Plugin(name = "重置用户密码", sources = ResourceSourceEnum.CONSOLE_SOURCE_VALUE, audit = true, operationDataTrace = true, parent = "authority")
     public RestResult<String> adminRestPassword(String type, Integer id) {
 
-        SecurityUserDetails userDetails = Casts.cast(type);
-
         String newPassword = userDetailsServices
                 .stream()
-                .filter(s -> s.getType().contains(userDetails.getType()))
+                .filter(s -> s.getType().contains(type))
                 .findFirst()
-                .orElseThrow(() -> new SystemException("找不到类型为 [" + userDetails.getType() + "] 的系统用户解析器实现"))
+                .orElseThrow(() -> new SystemException("找不到类型为 [" + type + "] 的系统用户解析器实现"))
                 .adminRestPassword(id);
 
         return RestResult.ofSuccess("重置密码成功", newPassword);

@@ -55,7 +55,7 @@ import java.util.Map;
         id = "access_crypto",
         parent = "config",
         icon = "icon-authorization-management",
-        authority = "perms[access_crypto:page]",
+        authority = "perms[resource_access_crypto:page]",
         type = ResourceType.Security,
         sources = ResourceSourceEnum.CONSOLE_SOURCE_VALUE
 )

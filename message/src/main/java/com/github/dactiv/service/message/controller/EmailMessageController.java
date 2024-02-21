@@ -37,7 +37,7 @@ import java.util.List;
         name = "邮件消息",
         id = "email",
         parent = "message",
-        authority = "perms[email:page]",
+        authority = "perms[message_email:page]",
         icon = "icon-email",
         type = ResourceType.Security,
         sources = ResourceSourceEnum.CONSOLE_SOURCE_VALUE

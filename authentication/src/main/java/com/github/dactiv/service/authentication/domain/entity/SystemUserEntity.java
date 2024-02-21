@@ -2,6 +2,7 @@ package com.github.dactiv.service.authentication.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldStrategy;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.github.dactiv.framework.commons.Casts;
 import com.github.dactiv.framework.commons.annotation.JsonCollectionGenericType;
@@ -70,6 +71,8 @@ public class SystemUserEntity extends IntegerVersionEntity<Integer> implements E
     /**
      * 密码
      */
+    @JsonIgnore
+    @TableField(updateStrategy = FieldStrategy.NEVER)
     private String password;
 
     /**

@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
         id = "resource",
         parent = "authority",
         icon = "icon-classification-type",
-        authority = "perms[resource:find]",
+        authority = "perms[authentication_resource:find]",
         type = ResourceType.Security,
         sources = ResourceSourceEnum.CONSOLE_SOURCE_VALUE
 )

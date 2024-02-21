@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.*;
 @Plugin(
         name = "商户 OAuth 2 客户端管理",
         id = "merchant_client",
-        authority = "perms[merchant_client:get_by_merchant_id]",
+        authority = "perms[authentication_merchant_client:get_by_merchant_id]",
         type = ResourceType.Security,
         sources = ResourceSourceEnum.CONSOLE_SOURCE_VALUE
 )

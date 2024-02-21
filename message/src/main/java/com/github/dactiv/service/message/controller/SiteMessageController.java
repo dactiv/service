@@ -42,7 +42,7 @@ import java.util.Map;
         name = "站内信消息",
         id = "site",
         parent = "message",
-        authority = "perms[site:page]",
+        authority = "perms[message_site:page]",
         icon = "icon-bell",
         type = ResourceType.Security,
         sources = ResourceSourceEnum.CONSOLE_SOURCE_VALUE
@@ -186,7 +186,7 @@ public class SiteMessageController {
     }
 
     @PostMapping("send")
-    @PreAuthorize("hasAuthority('perms[site:send]')")
+    @PreAuthorize("hasAuthority('perms[message_site:send]')")
     @Plugin(name = "发送站内信", audit = true, operationDataTrace = true)
     public RestResult<Object> send(@RequestBody SiteMessageBody siteMessageBody) {
         return siteMessageSender.sendMessage(Collections.singletonList(siteMessageBody));

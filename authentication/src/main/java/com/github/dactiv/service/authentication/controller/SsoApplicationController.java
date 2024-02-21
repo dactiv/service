@@ -37,7 +37,7 @@ import java.util.List;
         id = "sso_application",
         parent = "merchant_client",
         icon = "icon-application",
-        authority = "perms[sso_application:page]",
+        authority = "perms[authentication_sso_application:page]",
         type = ResourceType.Security,
         sources = ResourceSourceEnum.CONSOLE_SOURCE_VALUE
 )

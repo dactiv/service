@@ -33,7 +33,7 @@ import java.util.List;
         name = "批量消息",
         id = "batch",
         parent = "message",
-        authority = "perms[batch_message:page]",
+        authority = "perms[message_batch:page]",
         icon = "icon-copy",
         type = ResourceType.Security,
         sources = ResourceSourceEnum.CONSOLE_SOURCE_VALUE

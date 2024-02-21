@@ -41,7 +41,7 @@ import java.util.stream.Collectors;
         name = "短信消息",
         id = "sms",
         parent = "message",
-        authority = "perms[sms:page]",
+        authority = "perms[message_sms:page]",
         icon = "icon-sms",
         type = ResourceType.Security,
         sources = ResourceSourceEnum.CONSOLE_SOURCE_VALUE

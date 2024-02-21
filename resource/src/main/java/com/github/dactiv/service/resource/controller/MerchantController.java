@@ -34,7 +34,7 @@ import java.util.List;
 @Plugin(
         name = "商户管理",
         id = "merchant",
-        authority = "perms[merchant:page]",
+        authority = "perms[resource_merchant:page]",
         icon = "icon-merchant-list",
         parent = "config",
         type = ResourceType.Menu,

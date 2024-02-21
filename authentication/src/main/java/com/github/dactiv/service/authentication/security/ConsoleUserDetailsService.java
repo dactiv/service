@@ -2,6 +2,7 @@ package com.github.dactiv.service.authentication.security;
 
 import com.github.dactiv.framework.commons.Casts;
 import com.github.dactiv.framework.commons.enumerate.NameEnumUtils;
+import com.github.dactiv.framework.commons.id.IdEntity;
 import com.github.dactiv.framework.security.enumerate.UserStatus;
 import com.github.dactiv.framework.spring.security.authentication.AbstractUserDetailsService;
 import com.github.dactiv.framework.spring.security.authentication.config.AccessTokenProperties;
@@ -13,6 +14,7 @@ import com.github.dactiv.framework.spring.security.authentication.token.SimpleAu
 import com.github.dactiv.framework.spring.security.entity.SecurityUserDetails;
 import com.github.dactiv.service.authentication.config.ApplicationConfig;
 import com.github.dactiv.service.authentication.domain.entity.ConsoleUserEntity;
+import com.github.dactiv.service.authentication.domain.entity.SystemUserEntity;
 import com.github.dactiv.service.authentication.enumerate.AuthenticationTypeEnum;
 import com.github.dactiv.service.authentication.service.ConsoleUserService;
 import com.github.dactiv.service.commons.service.config.CommonsConfig;
@@ -144,11 +146,14 @@ public class ConsoleUserDetailsService extends AbstractUserDetailsService {
     @Override
     public String adminRestPassword(Integer id) {
 
-        ConsoleUserEntity user = consoleUserService.get(id);
         String newPassword = RandomStringUtils.random(commonsConfig.getRestPasswordLength(), true, true);
-        user.setPassword(passwordEncoder.encode(newPassword));
+        consoleUserService
+                .lambdaUpdate()
+                .set(SystemUserEntity::getPassword, getPasswordEncoder().encode(newPassword))
+                .eq(IdEntity::getId, id)
+                .update();
 
-        consoleUserService.updateById(user);
+        ConsoleUserEntity user = consoleUserService.get(id);
         consoleUserService.getAuthorizationService().expireSystemUserSession(user, ResourceSourceEnum.CONSOLE);
         consoleUserService.getAuthorizationService().deleteSystemUserAllCache(user, ResourceSourceEnum.CONSOLE);
 

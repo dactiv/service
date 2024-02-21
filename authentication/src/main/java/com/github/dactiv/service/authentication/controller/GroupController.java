@@ -7,6 +7,7 @@ import com.github.dactiv.framework.commons.tree.TreeUtils;
 import com.github.dactiv.framework.mybatis.plus.MybatisPlusQueryGenerator;
 import com.github.dactiv.framework.security.enumerate.ResourceType;
 import com.github.dactiv.framework.security.plugin.Plugin;
+import com.github.dactiv.framework.spring.web.result.filter.annotation.Exclude;
 import com.github.dactiv.service.authentication.domain.entity.GroupEntity;
 import com.github.dactiv.service.authentication.service.GroupService;
 import com.github.dactiv.service.commons.service.enumerate.ResourceSourceEnum;
@@ -29,7 +30,7 @@ import java.util.List;
         name = "角色管理",
         id = "group",
         parent = "authority",
-        authority = "perms[group:find]",
+        authority = "perms[authentication_group:find]",
         icon = "icon-role-management",
         type = ResourceType.Menu,
         sources = ResourceSourceEnum.CONSOLE_SOURCE_VALUE
@@ -45,6 +46,7 @@ public class GroupController {
      * 获取所有用户组
      */
     @PostMapping("find")
+    @Exclude("group.controller.find")
     @PreAuthorize("hasAuthority('perms[authentication_group:find]')")
     public List<GroupEntity> find(HttpServletRequest request, @RequestParam(required = false) boolean mergeTree) {
         QueryWrapper<GroupEntity> query = queryGenerator.getQueryWrapperByHttpRequest(request);

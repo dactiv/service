@@ -31,7 +31,7 @@ import java.util.List;
         id = "console_user",
         parent = "authority",
         icon = "icon-administrator",
-        authority = "perms[console_user:page]",
+        authority = "perms[authentication_console_user:page]",
         type = ResourceType.Menu,
         sources = ResourceSourceEnum.CONSOLE_SOURCE_VALUE
 )

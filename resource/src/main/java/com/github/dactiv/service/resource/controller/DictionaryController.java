@@ -34,7 +34,7 @@ import java.util.Objects;
         id = "dictionary",
         parent = "config",
         icon = "icon-dictionary",
-        authority = {"perms[dictionary_type:find]", "perms[data_dictionary:page]"},
+        authority = {"perms[resource_dictionary_type:find]", "perms[resource_data_dictionary:page]"},
         type = ResourceType.Menu,
         sources = ResourceSourceEnum.CONSOLE_SOURCE_VALUE
 )
