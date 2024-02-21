@@ -14,6 +14,7 @@ import com.github.dactiv.service.message.domain.entity.BasicMessageEntity;
 import com.github.dactiv.service.message.domain.entity.BatchMessageEntity;
 import com.github.dactiv.service.message.enumerate.AttachmentTypeEnum;
 import com.github.dactiv.service.message.service.BatchMessageService;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -28,6 +29,7 @@ import java.util.*;
  * @param <T> 批量消息数据的泛型实体类型
  * @param <S> 请求的消息数据泛型实体类型
  */
+@Getter
 @Slf4j
 public abstract class BatchMessageSender<T extends BasicMessageEntity, S extends BatchMessageEntity.Body> extends AbstractMessageSender<T> {
 
@@ -251,21 +253,9 @@ public abstract class BatchMessageSender<T extends BasicMessageEntity, S extends
         this.batchMessageService = batchMessageService;
     }
 
-    public BatchMessageService getBatchMessageService() {
-        return batchMessageService;
-    }
-
-    public ResourceServiceFeignClient getResourceServiceFeignClient() {
-        return resourceServiceFeignClient;
-    }
-
     @Autowired
     public void setResourceServiceFeignClient(ResourceServiceFeignClient resourceServiceFeignClient) {
         this.resourceServiceFeignClient = resourceServiceFeignClient;
-    }
-
-    public AsyncTaskExecutor getAsyncTaskExecutor() {
-        return asyncTaskExecutor;
     }
 
     @Autowired
@@ -274,11 +264,4 @@ public abstract class BatchMessageSender<T extends BasicMessageEntity, S extends
         this.asyncTaskExecutor = asyncTaskExecutor;
     }
 
-    public Class<S> getSendEntityClass() {
-        return sendEntityClass;
-    }
-
-    public Map<Integer, Map<String, byte[]>> getAttachmentCache() {
-        return attachmentCache;
-    }
 }

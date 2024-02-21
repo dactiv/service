@@ -156,7 +156,7 @@ public class BaiduMapService extends RedissonMapResolver {
 
         param.add("ak", key);
         param.add("query", keyword);
-        param.add("region", city.get(city.size() - 1));
+        param.add("region", city.getLast());
         param.add("page_size", String.valueOf(request.getSize()));
         param.add("page_num", String.valueOf(request.getNumber() - 1));
         param.add("city_limit", String.valueOf(baiduMapConfig.isCityLimit()));

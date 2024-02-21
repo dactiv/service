@@ -199,7 +199,7 @@ public class AttachmentController {
         }
 
         if (fileObjects.size() == 1) {
-            return RestResult.of("删除 [" + fileObjects.iterator().next().getObjectName() + "] 成功");
+            return RestResult.of("删除 [" + fileObjects.getFirst().getObjectName() + "] 成功");
         } else {
             return RestResult.of("删除 " + fileObjects.size() + " 个文件成功");
         }
@@ -554,7 +554,7 @@ public class AttachmentController {
             attachmentResolvers = this.attachmentResolvers
                     .stream()
                     .filter(a -> a.isSupport(attachmentType))
-                    .collect(Collectors.toList());
+                    .toList();
         } else {
             fileObject = FileObject.of(bucketName, objectName);
         }
@@ -647,7 +647,7 @@ public class AttachmentController {
         }
 
         if (list.size() == 1) {
-            return getObject(list.iterator().next(), userDetails, new LinkedHashMap<>());
+            return getObject(list.getFirst(), userDetails, new LinkedHashMap<>());
         }
 
         ByteArrayOutputStream responseData = new ByteArrayOutputStream();

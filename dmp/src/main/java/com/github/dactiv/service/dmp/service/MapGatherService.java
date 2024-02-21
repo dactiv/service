@@ -38,11 +38,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class MapGatherService {
 
-    private final AmqpTemplate amqpTemplate;
-
     private final ApplicationConfig applicationConfig;
-
-    private final RedissonClient redissonClient;
 
     private final List<MapResolver> mapResolvers;
 
@@ -57,7 +53,7 @@ public class MapGatherService {
         return mapResolver.search(userDetails, searchId, pageRequest, keyword, city);
     }
 
-    @Concurrent("dacitv:saas:gather:map:get-search-id:[#userDetails.userId]")
+    @Concurrent("dacitv:dmp:map:get-search-id:[#userDetails.userId]")
     public String generateSearchId(TypeUserDetails<Integer> userDetails, List<GatherTypeEnum> mapTypes) {
         String id = this.getClass().getName() + Casts.DOT + userDetails.toUniqueValue() + System.currentTimeMillis();
         String result = DigestUtils.md5DigestAsHex(id.getBytes(Charset.defaultCharset()));

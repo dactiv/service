@@ -93,7 +93,7 @@ public abstract class AbstractMessageCaptchaService<T extends MessageType> exten
 
         String captcha = generateCaptcha();
 
-        DataDictionaryMeta entry = dicList.iterator().next();
+        DataDictionaryMeta entry = dicList.getFirst();
 
         Map<String, Object> param = createSendMessageParam(requestBody, entry, captcha);
 

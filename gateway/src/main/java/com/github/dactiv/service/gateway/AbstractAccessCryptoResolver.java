@@ -195,7 +195,7 @@ public abstract class AbstractAccessCryptoResolver implements AccessCryptoResolv
             throw new CryptoException("key 值不能为 null");
         }
 
-        return accessToken.iterator().next();
+        return accessToken.getFirst();
     }
 
     /**

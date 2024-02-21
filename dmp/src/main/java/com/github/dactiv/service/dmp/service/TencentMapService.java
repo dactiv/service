@@ -131,7 +131,7 @@ public class TencentMapService extends RedissonMapResolver {
 
         param.add("key", getKey());
         param.add("keyword", URLEncoder.encode(keyword, Charset.defaultCharset()));
-        param.add("boundary", "region(" + city.get(city.size() - 1) +")");
+        param.add("boundary", "region(" + city.getLast() +")");
         param.add("page_size", String.valueOf(request.getSize()));
         param.add("page_index", String.valueOf(request.getNumber()));
 

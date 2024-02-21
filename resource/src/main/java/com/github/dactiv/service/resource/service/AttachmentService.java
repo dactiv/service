@@ -250,7 +250,7 @@ public class AttachmentService implements InitializingBean {
         Assert.isTrue(CollectionUtils.isNotEmpty(files), "找不到要发送的文件，请先选择文件在发送邮件");
         Map<String, Object> param = new LinkedHashMap<>();
 
-        String title = files.size() > 1 ? LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME) + attachmentConfig.getMultiFileTitle() : files.iterator().next().getFilename();
+        String title = files.size() > 1 ? LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME) + attachmentConfig.getMultiFileTitle() : files.getFirst().getFilename();
 
         param.put(MessageServiceFeignClient.DEFAULT_MESSAGE_TYPE_KEY, MessageServiceFeignClient.DEFAULT_EMAIL_TYPE_VALUE);
         param.put(MessageServiceFeignClient.Constants.Email.TO_EMAILS_FIELD, email);

@@ -143,7 +143,7 @@ public class AuthenticationInfoService {
                 IndexCoordinates.of(AuthenticationInfoEntity.ELASTICSEARCH_INDEX_NAME)
         );
 
-        SearchHit<AuthenticationInfoEntity> searchHit = searchHits.getSearchHits().iterator().next();
+        SearchHit<AuthenticationInfoEntity> searchHit = searchHits.getSearchHits().getFirst();
 
         return searchHit.getContent();
     }
@@ -177,7 +177,7 @@ public class AuthenticationInfoService {
 
         if (filter.containsKey("filter_[creation_time_between]")) {
             List<String> creationTime = Casts.cast(filter.get("filter_[creation_time_between]"));
-            result.add(Query.of(q -> q.range(r -> r.gte(JsonData.of(creationTime.get(0))).lte(JsonData.of(creationTime.get(1))))));
+            result.add(Query.of(q -> q.range(r -> r.gte(JsonData.of(creationTime.getFirst())).lte(JsonData.of(creationTime.get(1))))));
         }
 
         return result;

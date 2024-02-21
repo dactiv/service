@@ -8,12 +8,12 @@ import com.github.dactiv.framework.commons.page.PageRequest;
 import com.github.dactiv.framework.security.entity.TypeUserDetails;
 import com.github.dactiv.service.dmp.domain.meta.MapDataMeta;
 import com.github.dactiv.service.dmp.resolver.MapResolver;
-import lombok.Setter;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RBucket;
 import org.redisson.api.RList;
 import org.redisson.api.RedissonClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
 
 import java.nio.charset.Charset;
@@ -28,8 +28,12 @@ import java.util.Objects;
  */
 public abstract class RedissonMapResolver implements MapResolver {
 
-    @Setter
     protected RedissonClient redissonClient;
+
+    @Autowired
+    public void setRedissonClient(RedissonClient redissonClient) {
+        this.redissonClient = redissonClient;
+    }
 
     @Override
     public void createBySearchId(TypeUserDetails<Integer> userDetails, String searchId) {

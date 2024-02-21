@@ -160,7 +160,7 @@ public class AlibabaMapService extends RedissonMapResolver {
 
         param.add("key", cloudSecurityMeta.getSecretId());
         param.add("keywords", keyword);
-        param.add("city", city.get(city.size() - 1));
+        param.add("city", city.getLast());
         param.add("citylimit", String.valueOf(alibabaMapConfig.isCityLimit()));
         param.add("page", String.valueOf(request.getNumber()));
         param.add("offset", String.valueOf(request.getSize()));
@@ -208,7 +208,7 @@ public class AlibabaMapService extends RedissonMapResolver {
         Map<String, Object> body = exchangeApi(QUERY_POINT_URL, param, cloudSecurityMeta);
         List<Map<String, Object>> geocodes = Casts.cast(body.get("geocodes"));
         if (CollectionUtils.isNotEmpty(geocodes)) {
-            Map<String, Object> geoData = geocodes.iterator().next();
+            Map<String, Object> geoData = geocodes.getFirst();
             String[] location = StringUtils.splitByWholeSeparator(geoData.get("location").toString(), Casts.COMMA);
             return new Point2D.Double(Double.parseDouble(location[0]), Double.parseDouble(location[1]));
         }

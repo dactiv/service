@@ -80,7 +80,7 @@ public class OAuth2Config implements OAuth2AuthorizationConfigurerAdapter {
             } else {
                 // As per https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-08#section-8.4.2
                 // The authorization server MUST allow any port to be specified at the
-                // time of the request for loopback IP redirect URIs, to accommodate
+                // time of the request for loop back IP redirect URIs, to accommodate
                 // clients that obtain an available ephemeral port from the operating
                 // system at the time of the request.
                 boolean validRedirectUri = false;
@@ -130,6 +130,12 @@ public class OAuth2Config implements OAuth2AuthorizationConfigurerAdapter {
             redirectUri = null;        // Prevent redirects
         }
 
+        OAuth2AuthorizationCodeRequestAuthenticationToken token = getAuthorizationCodeToken(authorizationCodeRequestAuthentication, redirectUri);
+
+        throw new OAuth2AuthorizationCodeRequestAuthenticationException(error, token);
+    }
+
+    private static OAuth2AuthorizationCodeRequestAuthenticationToken getAuthorizationCodeToken(OAuth2AuthorizationCodeRequestAuthenticationToken authorizationCodeRequestAuthentication, String redirectUri) {
         OAuth2AuthorizationCodeRequestAuthenticationToken authorizationCodeRequestAuthenticationResult =
                 new OAuth2AuthorizationCodeRequestAuthenticationToken(
                         authorizationCodeRequestAuthentication.getAuthorizationUri(), authorizationCodeRequestAuthentication.getClientId(),
@@ -137,8 +143,7 @@ public class OAuth2Config implements OAuth2AuthorizationConfigurerAdapter {
                         authorizationCodeRequestAuthentication.getState(), authorizationCodeRequestAuthentication.getScopes(),
                         authorizationCodeRequestAuthentication.getAdditionalParameters());
         authorizationCodeRequestAuthenticationResult.setAuthenticated(true);
-
-        throw new OAuth2AuthorizationCodeRequestAuthenticationException(error, authorizationCodeRequestAuthenticationResult);
+        return authorizationCodeRequestAuthenticationResult;
     }
 
 }

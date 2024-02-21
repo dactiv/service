@@ -128,7 +128,7 @@ public interface ResourceServiceFeignClient {
     @GetMapping("captcha/generateToken")
     Map<String, Object> createCaptchaToken(@RequestParam("type") String type,
                                            @RequestParam("deviceIdentified") String deviceIdentified,
-                                           @RequestParam Map<String, Object> appendParms);
+                                           @RequestParam Map<String, Object> appendParams);
 
     /**
      * 生成验证码

@@ -64,7 +64,7 @@ public class ResourceController {
             resourceSources = sources
                     .stream()
                     .map(s -> NameEnumUtils.parse(s, ResourceSourceEnum.class))
-                    .collect(Collectors.toList());
+                    .toList();
         }
 
         List<ResourceMeta> resourceList = authorizationService.getResources(

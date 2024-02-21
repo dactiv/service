@@ -45,10 +45,10 @@ public class AlibabaMapConfig extends MapConfigPrepareMeta {
     /**
      * 查询数据缓存
      */
-    private CacheProperties searchCache = CacheProperties.of("cloudmasses.saas.gather:map:alibaba:search", TimeProperties.ofMinutes(30));
+    private CacheProperties searchCache = CacheProperties.of("dactiv:dmp:map:alibaba:search", TimeProperties.ofMinutes(30));
 
     /**
      * 获取数据缓存
      */
-    private CacheProperties dataCache = CacheProperties.of("cloudmasses.saas.gather:map:alibaba:data", TimeProperties.ofDay(1));
+    private CacheProperties dataCache = CacheProperties.of("dactiv:dmp:map:alibaba:data", TimeProperties.ofDay(1));
 }
