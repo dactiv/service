@@ -96,14 +96,5 @@ public class AttachmentConfig {
          */
         private List<String> statObjectIgnoreFields = Arrays.asList("legalHold", "headers");
 
-        /**
-         * 链接 uri
-         */
-        private String linkUri = "http://localhost:8080/resource/attachment/query?bucketName={0}&objectName={1}";
-
-        /**
-         * 链接参数名称
-         */
-        private String linkParamName = "link";
     }
 }

@@ -54,7 +54,7 @@ public class ResourceMeta extends IdEntity<String> implements Tree<String, Resou
     private String code;
 
     /**
-     * 类型:MENU.菜单类型、SECURITY.安全类型
+     * 类型
      */
     @NotEmpty
     @Length(max = 16)

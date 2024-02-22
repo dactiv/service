@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("resource")
 @Plugin(
-        name = "权限管理",
+        name = "权限资源管理",
         id = "resource",
         parent = "authority",
         icon = "icon-classification-type",

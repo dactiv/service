@@ -334,6 +334,7 @@ public class AuthorizationService {
         Stream<ResourceMeta> stream = userResource
                 .stream()
                 .filter(r -> r.getSources().stream().anyMatch(sourceContains::contains));
+
         List<ResourceType> defaultType = new LinkedList<>(ResourceType.DEFAULT_TYPE);
         if (Objects.nonNull(type)) {
             defaultType.add(type);

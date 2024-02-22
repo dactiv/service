@@ -13,7 +13,6 @@ import com.github.dactiv.framework.minio.MinioTemplate;
 import com.github.dactiv.framework.spring.security.authentication.service.DefaultUserDetailsService;
 import com.github.dactiv.framework.spring.security.entity.SecurityUserDetails;
 import com.github.dactiv.service.commons.service.SystemConstants;
-import com.github.dactiv.service.commons.service.domain.meta.IdValueMeta;
 import com.github.dactiv.service.commons.service.domain.meta.TypeIdNameMeta;
 import com.github.dactiv.service.commons.service.enumerate.AttachmentTypeEnum;
 import com.github.dactiv.service.commons.service.enumerate.MessageTypeEnum;
@@ -35,6 +34,7 @@ import org.apache.http.HttpHeaders;
 import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.messaging.MessageHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -90,16 +90,6 @@ public class AttachmentService implements InitializingBean {
         }
 
         return result;
-    }
-
-    public IdValueMeta<String, String> getLinkUrl(FileObject fileObject) {
-        String url = MessageFormat.format(
-                attachmentConfig.getResult().getLinkUri(),
-                fileObject.getBucketName(),
-                fileObject.getObjectName()
-        );
-
-        return IdValueMeta.of(attachmentConfig.getResult().getLinkParamName(), url);
     }
 
     /**
@@ -182,8 +172,7 @@ public class AttachmentService implements InitializingBean {
         RBucket<Map<String, Object>> bucket = redissonClient.getBucket(key);
         Assert.isTrue(bucket.isExists(), "找不到 ID 为 [" + uploadId + "] 分片上传内容");
         Map<String, Object> map = bucket.get();
-        List<String> chunkList = Casts.convertValue(map.get(MinioTemplate.CHUNK_PARAM_NAME), new TypeReference<>() {
-        });
+        List<String> chunkList = Casts.convertValue(map.get(MinioTemplate.CHUNK_PARAM_NAME), new TypeReference<>() {});
 
         Part[] parts = new Part[chunkList.size()];
         ListPartsResponse partResult = minioTemplate.listParts(fileObject, parts.length, uploadId);
@@ -202,8 +191,7 @@ public class AttachmentService implements InitializingBean {
 
         Map<String, Object> result = convertFields(response, response.getClass(), attachmentConfig.getResult().getUploadResultIgnoreFields());
 
-        result.putAll(Casts.convertValue(getLinkUrl(fileObject), Casts.MAP_TYPE_REFERENCE));
-        result.put(HttpHeaders.CONTENT_TYPE, map.get(HttpHeaders.CONTENT_TYPE));
+        result.put(MessageHeaders.CONTENT_TYPE, map.get(HttpHeaders.CONTENT_TYPE));
         result.put(TypeIdNameMeta.TYPE_FIELD_NAME, map.get(TypeIdNameMeta.TYPE_FIELD_NAME));
 
         FileObject cacheFileObject = Casts.cast(map.get(FileObject.MINIO_OBJECT_NAME));

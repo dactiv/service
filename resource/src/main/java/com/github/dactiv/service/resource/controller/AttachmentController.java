@@ -39,6 +39,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.stomp.StompHeaders;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
@@ -124,9 +125,6 @@ public class AttachmentController {
             }
 
             Map<String, Object> map = attachmentService.convertFields(statObjectResponse, statObjectResponse.getClass(), attachmentService.getAttachmentConfig().getResult().getStatObjectIgnoreFields());
-            if (items.stream().anyMatch(i -> Objects.equals(i.get(FileObject.MINIO_ETAG), map.get(FileObject.MINIO_ETAG)))) {
-                continue;
-            }
 
             items.add(map);
         }
@@ -383,8 +381,7 @@ public class AttachmentController {
 
         Map<String, String> userMetadata = new LinkedHashMap<>();
         if (appendParam.containsKey(MinioTemplate.USER_METADATA)) {
-            Map<String, String> paramUserMetadata = Casts.convertValue(appendParam.get(MinioTemplate.USER_METADATA), new TypeReference<>() {
-            });
+            Map<String, String> paramUserMetadata = Casts.convertValue(appendParam.get(MinioTemplate.USER_METADATA), new TypeReference<>() {});
             userMetadata.putAll(paramUserMetadata);
         }
 
@@ -402,8 +399,12 @@ public class AttachmentController {
 
         if (Objects.nonNull(userDetails)) {
             userMetadata.put(MinioTemplate.UPLOADER_ID, userDetails.getId().toString());
+            userMetadata.put(MinioTemplate.UPLOADER_NAME, userDetails.getUsername());
             userMetadata.put(MinioTemplate.UPLOADER_TYPE, userDetails.getType());
         }
+
+        userMetadata.put(StompHeaders.CONTENT_TYPE, file.getContentType());
+        userMetadata.put(FilenameObject.MINIO_ORIGINAL_FILE_NAME, filenameObject.getFilename());
 
         ObjectWriteResponse response = attachmentService.getMinioTemplate().putObject(
                 filenameObject,
@@ -413,15 +414,12 @@ public class AttachmentController {
 
         if (MapUtils.isEmpty(result)) {
             result = attachmentService.convertFields(response, response.getClass(), attachmentService.getAttachmentConfig().getResult().getUploadResultIgnoreFields());
-            result.putAll(Casts.convertValue(attachmentService.getLinkUrl(filenameObject), Casts.MAP_TYPE_REFERENCE));
         } else {
             Map<String, Object> fields = attachmentService.convertFields(response, response.getClass(), attachmentService.getAttachmentConfig().getResult().getUploadResultIgnoreFields());
-            fields.putAll(Casts.convertValue(attachmentService.getLinkUrl(filenameObject), Casts.MAP_TYPE_REFERENCE));
             result.put(attachmentService.getAttachmentConfig().getSourceField(), fields);
         }
 
-        result.put(FilenameObject.MINIO_ORIGINAL_FILE_NAME, filenameObject.getFilename());
-        result.put(HttpHeaders.CONTENT_TYPE, file.getContentType());
+        result.put(MinioTemplate.USER_METADATA, userMetadata);
 
         for (AttachmentResolver resolver : attachmentResolvers) {
             resolver.postUpload(file, result, response, userDetails, userMetadata, appendParam);
